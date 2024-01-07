@@ -1,4 +1,6 @@
-﻿
+﻿using Microsoft.EntityFrameworkCore;
+using Project1.Model;
+
 namespace Project1.Data;
 
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -14,4 +16,6 @@ public class AppDbContext : IdentityDbContext<IdentityUser, IdentityRole, string
     protected AppDbContext()
     {
     }
+
+public DbSet<Project1.Model.Plant> Plant { get; set; } = default!;
 }
