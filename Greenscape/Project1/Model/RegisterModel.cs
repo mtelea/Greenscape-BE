@@ -9,7 +9,7 @@ namespace Project1.Model
         public required string Email { get; set; }
 
         [Required]
-        public required string Name { get; set; }
+        public required string UserName { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
