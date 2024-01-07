@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Project1.Data;
+using Project1.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +26,14 @@ builder.Services.AddDefaultIdentity<IdentityUser>
 builder.Services.AddControllersWithViews();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddTransient<IEmailSender>(provider =>
+{
+    var configuration = provider.GetRequiredService<IConfiguration>();
+    var apiKey = configuration["SendGrid:ApiKey"];
+    return new SendGridEmailSender(apiKey);
+});
+
 
 
 var app = builder.Build();
