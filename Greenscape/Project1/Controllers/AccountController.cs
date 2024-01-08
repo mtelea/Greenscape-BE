@@ -6,7 +6,7 @@ using Project1.Service;
 
 namespace Project1.Controllers
 {
-    [Route("api/account")]
+    [Route("/account")]
     [ApiController]
     public class AccountController : ControllerBase
     {
@@ -28,7 +28,7 @@ namespace Project1.Controllers
             if (user != null && user.Email != null)
             {
                 var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-                var callbackUrl = Url.Action("ResetPassword", "Account", new { token, email = user.Email }, protocol: HttpContext.Request.Scheme);
+                var callbackUrl = Url.Action("reset-password", "account", new { token, email = user.Email }, protocol: HttpContext.Request.Scheme);
                 var emailSubject = "Reset Your Greenscape Password";
                 var emailBody = $"Please reset the password of your Greenscape account by clicking <a href='{callbackUrl}'>here</a>.";
 
@@ -39,5 +39,29 @@ namespace Project1.Controllers
 
             return NotFound(new { Message = "User not found" });
         }
+
+        [HttpPost("reset-password")]
+        public async Task<IActionResult> ResetPassword([FromQuery] string token, [FromQuery] string email, [FromBody] ResetPasswordModel model)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+
+            if (user == null)
+            {
+                return NotFound(new { Message = "User not found" });
+            }
+
+            var result = await _userManager.ResetPasswordAsync(user, token, model.NewPassword);
+
+            if (result.Succeeded)
+            {
+                return Ok(new { Message = "Password reset successful" });
+            }
+            else
+            {
+                return BadRequest(new { Message = "Password reset failed", Errors = result.Errors });
+            }
+        }
+
+
     }
 }
