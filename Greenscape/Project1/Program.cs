@@ -1,8 +1,11 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using Project1.Data;
 using Project1.Model;
 using Project1.Service;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,7 +26,10 @@ builder.Services.AddDefaultIdentity<IdentityUser>
         options.Password.RequireUppercase = false;
         options.Password.RequireLowercase = false;
     })
+.AddRoles<IdentityRole>()
 .AddEntityFrameworkStores<AppDbContext>();
+
+builder.Services.AddAuthorization();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddEndpointsApiExplorer();
@@ -54,10 +60,10 @@ app.UseSwaggerUI(c =>
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Test API");
 });
 
-app.UseAuthentication();
-/*app.UseAuthorization();
-*/
 app.MapIdentityApi<IdentityUser>();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",

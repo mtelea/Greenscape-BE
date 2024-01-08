@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Project1.Controllers
 {
@@ -19,6 +20,7 @@ namespace Project1.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "User")]
         public IEnumerable<WeatherForecast> Get()
         {
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
