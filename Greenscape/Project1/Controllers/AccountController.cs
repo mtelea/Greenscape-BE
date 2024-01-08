@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Project1.Model;
@@ -61,6 +62,7 @@ namespace Project1.Controllers
                 return BadRequest(new { Message = "Password reset failed", Errors = result.Errors });
             }
         }
+
 
 
     }
