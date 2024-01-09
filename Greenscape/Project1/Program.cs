@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Project1.Data;
+using Project1.Mapper;
 using Project1.Model;
 using Project1.Service;
 using System.Security.Claims;
@@ -14,6 +15,7 @@ var secretConfiguration = new ConfigurationBuilder()
     .AddJsonFile("secrets.json")
     .Build();
 
+builder.Services.AddScoped<PlantMapper>();
 builder.Services.AddDbContext<AppDbContext>(options =>
         options.UseSqlServer(secretConfiguration["DefaultConnection"]));
 builder.Services.AddDefaultIdentity<ApplicationUser>

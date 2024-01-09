@@ -1,108 +1,83 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Project1.Data;
+using Project1.Dto;
+using Project1.Mapper;
 using Project1.Model;
 
 namespace Project1.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("/plants")]
     [ApiController]
     public class PlantsController : ControllerBase
     {
         private readonly AppDbContext _context;
+        private readonly PlantMapper _plantMapper;
 
-        public PlantsController(AppDbContext context)
+        public PlantsController(AppDbContext context, PlantMapper plantMapper)
         {
             _context = context;
+            _plantMapper = plantMapper;
         }
 
-        // GET: api/Plants
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Plant>>> GetPlant()
+        [HttpGet("get/{plantId}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult<Plant>> GetPlantById(int plantId)
         {
-            return await _context.Plant.ToListAsync();
-        }
-
-        // GET: api/Plants/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Plant>> GetPlant(int id)
-        {
-            var plant = await _context.Plant.FindAsync(id);
-
+            var plant = await _context.Plant.FirstOrDefaultAsync(p => p.PlantID == plantId);
             if (plant == null)
             {
-                return NotFound();
+                return NotFound("Plant not found");
             }
 
-            return plant;
+            return Ok(plant);
         }
 
-        // PUT: api/Plants/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutPlant(int id, Plant plant)
+
+        [HttpPost("add")]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult<Plant>> AddPlant([FromBody] PlantDto newPlant)
         {
-            if (id != plant.PlantID)
+            if (newPlant == null)
             {
-                return BadRequest();
+                return BadRequest("Plant data is invalid");
             }
 
-            _context.Entry(plant).State = EntityState.Modified;
-
-            try
+            var existingPlant = await _context.Plant.FirstOrDefaultAsync(p => p.PlantName == newPlant.PlantName);
+            if (existingPlant != null)
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!PlantExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return Conflict("A plant with the same name already exists");
             }
 
-            return NoContent();
-        }
-
-        // POST: api/Plants
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Plant>> PostPlant(Plant plant)
-        {
-            _context.Plant.Add(plant);
+            _context.Plant.Add(_plantMapper.MapDtoToPlant(newPlant));
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetPlant", new { id = plant.PlantID }, plant);
+            return Ok(newPlant);
         }
 
-        // DELETE: api/Plants/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePlant(int id)
+        [HttpDelete("delete/{plantId}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> DeletePlant(int plantId)
         {
-            var plant = await _context.Plant.FindAsync(id);
-            if (plant == null)
+            var plantToRemove = await _context.Plant.FirstOrDefaultAsync(p => p.PlantID == plantId);
+            if (plantToRemove == null)
             {
-                return NotFound();
+                return NotFound("Plant not found");
             }
 
-            _context.Plant.Remove(plant);
+            _context.Plant.Remove(plantToRemove);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool PlantExists(int id)
-        {
-            return _context.Plant.Any(e => e.PlantID == id);
-        }
+
     }
 }
