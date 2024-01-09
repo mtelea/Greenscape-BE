@@ -62,6 +62,7 @@
         </form>
 
         <button class="btn btn-dark" type="submit" style="width:80px"
+                (click)="doLogin()"
             [title]="loginForm.valid ? 'Save your entered data' : 'Disabled until the form data is valid'"
             [disabled]="!loginForm.valid">
             Conecteaza-te

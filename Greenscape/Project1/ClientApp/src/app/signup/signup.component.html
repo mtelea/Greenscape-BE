@@ -83,6 +83,7 @@
 
 
   <button class="btn btn-dark" type="submit" style="width:80px"
+          (click)="Register()"
     [title]="signupForm.valid ? 'Save your entered data' : 'Disabled until the form data is valid'"
     [disabled]="!signupForm.valid">
     Inscrie-te

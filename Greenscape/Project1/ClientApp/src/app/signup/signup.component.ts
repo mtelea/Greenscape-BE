@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, NgForm, ValidatorFn, Validators } from '@angular/forms';
 import { Signup } from './signup';
 import { debounceTime } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 function passwordMatcher(c: AbstractControl): { [key: string]: boolean } | null {
   const passwordControl = c.get('password');
@@ -33,7 +34,7 @@ export class SignupComponent implements OnInit {
     minlength: 'Your password must have at least 6 characters.'
   };
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private httpClient: HttpClient) { }
 
   ngOnInit(): void {
     this.signupForm = this.fb.group({
@@ -52,6 +53,35 @@ export class SignupComponent implements OnInit {
       value => this.setMessage(passwordControl)
     );
   }
+
+  Register(): void {
+    if (this.signupForm.valid) {
+      const url = 'https://localhost:7211/register/register-user';
+
+      const { email, username, passwordGroup } = this.signupForm.value;
+      const { password, confirmPassword } = passwordGroup;
+
+      const requestBody = {
+        email: email,
+        userName: username,
+        password: password,
+        confirmPassword: confirmPassword
+      };
+
+      this.httpClient.post(url, requestBody)
+        .subscribe(
+          (response) => {
+            console.log('API Response:', response);
+          },
+          (error) => {
+            console.error('API Error:', error);
+          }
+        );
+    } else {
+      console.error('Form is invalid. Please check the form fields.');
+    }
+  }
+
 
   save(): void {
     console.log(this.signupForm);
