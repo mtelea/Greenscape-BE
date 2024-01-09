@@ -138,12 +138,20 @@ namespace Project1.Controllers
                 UserData newUserData = new UserData();
                 newUserData.UserID = userId;
                 newUserData.Points = 0;
+                if (points < 0)
+                {
+                    return BadRequest(new { Message = "Points cannot be lower than zero" });
+                }
                 newUserData.Points = points;
                 _context.UserData.Add(newUserData);
             }
 
             else if (userData != null)
             {
+                if (points < 0)
+                {
+                    return BadRequest(new { Message = "Points cannot be lower than zero" });
+                }
                 userData.Points = points;
             }
 
