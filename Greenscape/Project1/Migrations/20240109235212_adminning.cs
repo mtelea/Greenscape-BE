@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Project1.Migrations
 {
     /// <inheritdoc />
-    public partial class trans1 : Migration
+    public partial class adminning : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -174,12 +174,34 @@ namespace Project1.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PointsHistory",
+                columns: table => new
+                {
+                    EntryID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    PointsModified = table.Column<int>(type: "int", nullable: false),
+                    EntryDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Source = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PointsHistory", x => x.EntryID);
+                    table.ForeignKey(
+                        name: "FK_PointsHistory_AspNetUsers_UserID",
+                        column: x => x.UserID,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserData",
                 columns: table => new
                 {
                     UserID = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Points = table.Column<int>(type: "int", nullable: false),
-                    ProfilePicture = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Points = table.Column<int>(type: "int", nullable: true),
+                    ProfilePicture = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -230,6 +252,11 @@ namespace Project1.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PointsHistory_UserID",
+                table: "PointsHistory",
+                column: "UserID");
         }
 
         /// <inheritdoc />
@@ -252,6 +279,9 @@ namespace Project1.Migrations
 
             migrationBuilder.DropTable(
                 name: "Plant");
+
+            migrationBuilder.DropTable(
+                name: "PointsHistory");
 
             migrationBuilder.DropTable(
                 name: "UserData");

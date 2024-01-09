@@ -17,8 +17,9 @@ public class AppDbContext : IdentityDbContext<ApplicationUser, IdentityRole, str
     {
     }
 
-public DbSet<Project1.Model.Plant> Plant { get; set; } = default!;
-public DbSet<UserData> UserData { get; set; } = default!;
+    public DbSet<Project1.Model.Plant> Plant { get; set; } = default!;
+    public DbSet<UserData> UserData { get; set; } = default!;
+    public DbSet<PointsHistory> PointsHistory { get; set; } = default!;
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -27,6 +28,13 @@ public DbSet<UserData> UserData { get; set; } = default!;
         builder.Entity<ApplicationUser>()
             .HasOne(u => u.UserData)
             .WithOne(ud => ud.ApplicationUser)
-            .HasForeignKey<UserData>(ud => ud.UserID);
+            .HasForeignKey<UserData>(ud => ud.UserID)
+            .OnDelete(DeleteBehavior.Cascade);
+    
+        builder.Entity<ApplicationUser>()
+                .HasMany(u => u.PointsHistory)
+                .WithOne(ud => ud.ApplicationUser)
+                .HasForeignKey(ud => ud.UserID)
+                .OnDelete(DeleteBehavior.Cascade);
     }
 }

@@ -18,11 +18,13 @@ namespace Project1.Controllers
     {
         private readonly AppDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly PointsHistory _pointsHistory;
 
-        public UserDataController(AppDbContext context, UserManager<ApplicationUser> userManager)
+        public UserDataController(AppDbContext context, UserManager<ApplicationUser> userManager, PointsHistory pointsHistory)
         {
             _context = context;
             _userManager = userManager;
+            _pointsHistory = pointsHistory;
         }
 
         [HttpPost("set-user-profile-picture")]
@@ -66,7 +68,7 @@ namespace Project1.Controllers
         }
 
         [HttpPost("update-user-points")]
-        public async Task<IActionResult> UpdateUserPoints(string userId, int points, string operation)
+        public async Task<IActionResult> UpdateUserPoints(string userId, int points, string operation, string source)
         {
             var user = await _userManager.FindByIdAsync(userId);
             var userData = await _context.UserData.FindAsync(userId);
@@ -89,6 +91,8 @@ namespace Project1.Controllers
             if (userData == null)
             {
                 UserData newUserData = new UserData();
+                PointsHistory pointsHistory = new PointsHistory();
+
                 newUserData.UserID = userId;
                 newUserData.Points = 0;
                 if ((points * operationSign) < 0)
@@ -96,7 +100,14 @@ namespace Project1.Controllers
                     return BadRequest(new { Message = "Points cannot go lower than 0", UserId = user.Id });
                 }
                 newUserData.Points += points * operationSign;
+
+                pointsHistory.UserID = userId;
+                pointsHistory.PointsModified = points * operationSign;
+                pointsHistory.EntryDate = DateTime.Now;
+                pointsHistory.Source = source;
+
                 _context.UserData.Add(newUserData);
+                _context.PointsHistory.Add(pointsHistory);
             }
 
             else if (userData != null)
@@ -105,6 +116,15 @@ namespace Project1.Controllers
                 {
                     return BadRequest(new { Message = "Points cannot go lower than 0", UserId = user.Id });
                 }
+
+                PointsHistory pointsHistory = new PointsHistory();
+                pointsHistory.UserID = userId;
+                pointsHistory.PointsModified = points * operationSign;
+                pointsHistory.EntryDate = DateTime.Now;
+                pointsHistory.Source = source;
+
+                _context.PointsHistory.Add(pointsHistory);
+
                 userData.Points += points * operationSign;
             }
 
