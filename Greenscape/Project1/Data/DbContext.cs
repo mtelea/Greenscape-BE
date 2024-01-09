@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-public class AppDbContext : IdentityDbContext<IdentityUser, IdentityRole, string>
+public class AppDbContext : IdentityDbContext<ApplicationUser, IdentityRole, string>
 {
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
@@ -18,4 +18,16 @@ public class AppDbContext : IdentityDbContext<IdentityUser, IdentityRole, string
     }
 
 public DbSet<Project1.Model.Plant> Plant { get; set; } = default!;
+public DbSet<UserData> UserData { get; set; } = default!;
+
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+        base.OnModelCreating(builder);
+
+        // Configure one-to-one relationship
+        builder.Entity<ApplicationUser>()
+            .HasOne(u => u.UserData)
+            .WithOne(ud => ud.ApplicationUser)
+            .HasForeignKey<UserData>(ud => ud.UserID);
+    }
 }
