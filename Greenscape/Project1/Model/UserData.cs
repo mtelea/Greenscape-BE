@@ -10,8 +10,9 @@ namespace Project1.Model
         [Key]
         [ForeignKey("ApplicationUser")]
         public string UserID { get; set; }
-        public int Points { get; set; } = 0;
-        public string ProfilePicture {  get; set; }
+        public int? Points { get; set; } = 0;
+        // TODO Add default profile picture
+        public string? ProfilePicture {  get; set; }
 
         public ApplicationUser ApplicationUser { get; set; }
     }

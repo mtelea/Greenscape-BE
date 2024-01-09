@@ -12,8 +12,8 @@ using Project1.Data;
 namespace Project1.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240109150330_updateduserss")]
-    partial class updateduserss
+    [Migration("20240109204539_trans1")]
+    partial class trans1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

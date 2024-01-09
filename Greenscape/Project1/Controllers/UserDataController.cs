@@ -25,15 +25,15 @@ namespace Project1.Controllers
             _userManager = userManager;
         }
 
-        [HttpPost("add-user-profile-picture")]
-        public async Task<IActionResult> AddUserProfilePicture(string userId, [FromBody] string pictureLink)
+        [HttpPost("set-user-profile-picture")]
+        public async Task<IActionResult> SetUserProfilePicture(string userId, string pictureLink)
         {
             var user = await _userManager.FindByIdAsync(userId);
             var userData = await _context.UserData.FindAsync(userId);
 
             if (user == null)
             {
-                return NotFound("User was not found. Cannot update profile picture.");
+                return NotFound(new { Message = "User was not found. Cannot set profile picture." });
             }
 
             if (userData == null)
@@ -57,26 +57,33 @@ namespace Project1.Controllers
             }
             catch (Exception e)
             {
-               return BadRequest(new { Message = "Updating profile picture failed", Errors = e });
+                System.Diagnostics.Debug.WriteLine(e);
+                return BadRequest(new { Message = "Setting profile picture failed." });
 
             }
-            return Ok("Profile picture updated successfully.");
+            return Ok(new { Message = "Profile picture set successfully." });
 
         }
-/*
-        [HttpPost("modify-user-points")]
-        public async Task<IActionResult> ModifyUserPoints(string userId, [FromBody] int points, [FromBody] string operation)
+
+        [HttpPost("update-user-points")]
+        public async Task<IActionResult> UpdateUserPoints(string userId, int points, string operation)
         {
             var user = await _userManager.FindByIdAsync(userId);
             var userData = await _context.UserData.FindAsync(userId);
+            var operationSign = 1;
 
-            if (operation == "add") { 
-
+            if (operation == "add")
+            {
+                operationSign = 1;
+            } 
+            else if (operation == "subtract")
+            {
+                operationSign = -1;
             }
 
             if (user == null)
             {
-                return NotFound("User was not found. Cannot modify points.");
+                return NotFound(new { Message = "User was not found. Cannot modify points."});
             }
 
             if (userData == null)
@@ -84,16 +91,22 @@ namespace Project1.Controllers
                 UserData newUserData = new UserData();
                 newUserData.UserID = userId;
                 newUserData.Points = 0;
-                newUserData.Points += points;
+                if ((points * operationSign) < 0)
+                {
+                    return BadRequest(new { Message = "Points cannot go lower than 0", UserId = user.Id });
+                }
+                newUserData.Points += points * operationSign;
                 _context.UserData.Add(newUserData);
             }
 
             else if (userData != null)
             {
-                userData.Points =;
+                if ((userData.Points + points * operationSign) < 0)
+                {
+                    return BadRequest(new { Message = "Points cannot go lower than 0", UserId = user.Id });
+                }
+                userData.Points += points * operationSign;
             }
-
-            user.UserData.ProfilePicture = pictureLink;
 
             try
             {
@@ -101,12 +114,60 @@ namespace Project1.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(new { Message = "Updating profile picture failed", Errors = e });
+                System.Diagnostics.Debug.WriteLine(e);
+                return BadRequest(new { Message = "Updating points failed, database transaction failed"});
 
             }
-            return Ok("Profile picture updated successfully.");
+            return Ok(new { Message = "Points updated successfully.", UserId = user.Id });
 
-        }*/
+        }
+
+        [HttpPost("set-user-points")]
+        public async Task<IActionResult> SetUserPoints(string userId, int points)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            var userData = await _context.UserData.FindAsync(userId);
+
+            if (user == null)
+            {
+                return NotFound(new { Message = "User was not found. Cannot set points." });
+            }
+
+            if (userData == null)
+            {
+                UserData newUserData = new UserData();
+                newUserData.UserID = userId;
+                newUserData.Points = 0;
+                if (points < 0)
+                {
+                    return BadRequest(new { Message = "Points cannot be lower than zero" });
+                }
+                newUserData.Points = points;
+                _context.UserData.Add(newUserData);
+            }
+
+            else if (userData != null)
+            {
+                if (points < 0)
+                {
+                    return BadRequest(new { Message = "Points cannot be lower than zero" });
+                }
+                userData.Points = points;
+            }
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+                return BadRequest(new { Message = "Setting points failed"});
+
+            }
+            return Ok(new { Message = "Points set successfully." });
+
+        }
 
         // GET: api/UserData
         [HttpGet]
