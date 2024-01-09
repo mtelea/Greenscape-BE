@@ -16,7 +16,7 @@ var secretConfiguration = new ConfigurationBuilder()
 
 builder.Services.AddDbContext<AppDbContext>(options =>
         options.UseSqlServer(secretConfiguration["DefaultConnection"]));
-builder.Services.AddDefaultIdentity<IdentityUser>
+builder.Services.AddDefaultIdentity<ApplicationUser>
     (options =>
     {
         options.SignIn.RequireConfirmedAccount = false;
@@ -30,6 +30,15 @@ builder.Services.AddDefaultIdentity<IdentityUser>
 .AddEntityFrameworkStores<AppDbContext>();
 
 builder.Services.AddAuthorization();
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.Events.OnRedirectToLogin = context =>
+    {
+        context.Response.StatusCode = 401;
+        return Task.CompletedTask;
+    };
+});
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddEndpointsApiExplorer();
@@ -60,15 +69,16 @@ app.UseSwaggerUI(c =>
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Test API");
 });
 
-app.MapIdentityApi<IdentityUser>();
+app.MapIdentityApi<ApplicationUser>();
 
 app.UseAuthentication();
-app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller}/{action=Index}/{id?}");
 
 app.MapFallbackToFile("index.html"); ;
+app.UseAuthorization();
+
 
 app.Run();

@@ -47,7 +47,7 @@ namespace Project1.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPlant(int id, Plant plant)
         {
-            if (id != plant.Id)
+            if (id != plant.PlantID)
             {
                 return BadRequest();
             }
@@ -81,7 +81,7 @@ namespace Project1.Controllers
             _context.Plant.Add(plant);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetPlant", new { id = plant.Id }, plant);
+            return CreatedAtAction("GetPlant", new { id = plant.PlantID }, plant);
         }
 
         // DELETE: api/Plants/5
@@ -102,7 +102,7 @@ namespace Project1.Controllers
 
         private bool PlantExists(int id)
         {
-            return _context.Plant.Any(e => e.Id == id);
+            return _context.Plant.Any(e => e.PlantID == id);
         }
     }
 }

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Project1.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class updateduserss : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -54,16 +54,17 @@ namespace Project1.Migrations
                 name: "Plant",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    PlantID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PlantName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PlantImage = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Type = table.Column<int>(type: "int", nullable: false),
                     PlantSpecies = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PlantDescription = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Plant", x => x.Id);
+                    table.PrimaryKey("PK_Plant", x => x.PlantID);
                 });
 
             migrationBuilder.CreateTable(
@@ -172,6 +173,25 @@ namespace Project1.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "UserData",
+                columns: table => new
+                {
+                    UserID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Points = table.Column<int>(type: "int", nullable: false),
+                    ProfilePicture = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserData", x => x.UserID);
+                    table.ForeignKey(
+                        name: "FK_UserData_AspNetUsers_UserID",
+                        column: x => x.UserID,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -232,6 +252,9 @@ namespace Project1.Migrations
 
             migrationBuilder.DropTable(
                 name: "Plant");
+
+            migrationBuilder.DropTable(
+                name: "UserData");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
