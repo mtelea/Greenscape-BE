@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Project1.Model;
 
 namespace Project1.Controllers
 {
@@ -10,10 +11,10 @@ namespace Project1.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        public UserController(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+        public UserController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -71,5 +72,36 @@ namespace Project1.Controllers
 
             return Ok(userWithRoles);
         }
+
+        [HttpDelete("delete")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> DeleteUserByEmail([FromQuery] string email)
+        {
+            // Check if the current user has the "Admin" role
+            if (!User.IsInRole("Admin"))
+            {
+                return Forbid();
+            }
+
+            // Find the user by email
+            var userToDelete = await _userManager.FindByEmailAsync(email);
+
+            // Check if the user exists
+            if (userToDelete == null)
+            {
+                return NotFound(new { Message = "User not found." });
+            }
+
+            // Delete the user
+            var result = await _userManager.DeleteAsync(userToDelete);
+
+            if (result.Succeeded)
+            {
+                return Ok(new { Message = "User deleted successfully" });
+            }
+
+            return BadRequest(new { Message = "Failed to delete user", Errors = result.Errors });
+        }
+
     }
 }
