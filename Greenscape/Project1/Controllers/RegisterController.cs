@@ -22,7 +22,7 @@ namespace Project1.Controllers
             _roleManager = roleManager;
         }
 
-        [HttpPost]
+        [HttpPost("register-user")]
         public async Task<IActionResult> Register([FromBody] RegisterModel model)
         {
             // Check if roles exist, if not, create them
