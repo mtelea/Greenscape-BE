@@ -1,0 +1,129 @@
+@media (max-width: 900px) {
+    p {
+        font-size: 1.7vw !important;
+    }
+}
+
+.home-page {
+    color: #3b3630;
+}
+
+h1,
+h2,
+h3 {
+    font-family: GT-Super;
+}
+
+h1 {
+    font-size: 4vw;
+}
+
+p {
+    font-family: Raleway;
+}
+
+h2 {
+    font-size: 2.5vw;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas: "z-legume z-fructe z-flori";
+}
+
+#legume {
+    grid-area: z-legume;
+    margin: 4%;
+}
+
+#fructe {
+    grid-area: z-fructe;
+    margin: 4%;
+}
+
+#flori {
+    grid-area: z-flori;
+    margin: 4%;
+}
+
+.card-title {
+    font-size: 2vw;
+    color: #3b3630;
+    text-align: center;
+    font-family: Raleway;
+    font-weight: 400;
+}
+
+.home-menu .card .image-box {
+    overflow: hidden;
+    border-radius: 5px;
+}
+
+.home-menu .card {
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.40);
+    border: none;
+}
+
+.home-menu .card:hover {
+    cursor: pointer;
+    box-shadow: 0px 0px 26px rgba(0, 0, 0, 0.50);
+    -webkit-transition: all 0.2s ease-in;
+    -moz-transition: all 0.2s ease-in;
+    -ms-transition: all 0.2s ease-in;
+    -o-transition: all 0.2s ease-in;
+    transition: all 0.2s ease-in;
+}
+
+.home-menu .card .image-box img {
+    -webkit-transition: all .9s ease;
+    -moz-transition: all .9s ease;
+    -o-transition: all .9s ease;
+    -ms-transition: all .9s ease;
+    width: 100%;
+}
+
+.home-menu .card:hover .image-box img {
+    opacity: 0.7;
+    -webkit-transform: scale(1.15);
+    -moz-transform: scale(1.15);
+    -ms-transform: scale(1.15);
+    -o-transform: scale(1.15);
+    transform: scale(1.15);
+}
+
+.home-login {
+    text-align: center;
+    margin: 5%;
+}
+
+.home-login-redirect::before {
+    content: '';
+    position: absolute;
+    width: 19%;
+    height: 2px;
+    border-radius: 4px;
+    background-color: #3b3630;
+    bottom: -1px;
+    left: 40%;
+    transform-origin: right;
+    transform: scaleX(0);
+    transition: transform .3s ease-in-out;
+}
+
+.home-login-redirect:hover::before {
+    transform-origin: left;
+    transform: scaleX(1);
+}
+
+.home-login-redirect {
+    color: #3b3630;
+    position: relative;
+    text-decoration: none;
+    transform: scale(1);
+    transition: transform 0.3s ease-in-out;
+}
+.home-login-redirect:hover{
+    cursor: pointer;
+    transform: scale(1.15);
+}

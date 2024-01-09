@@ -1,10 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
-
+@import "~@fortawesome/fontawesome-free/css/all.css";
 /* Provide sufficient contrast against white background */
 a {
   color: #0366d6;
 }
-
+@media (max-width: 900px) {
+  p {
+      font-size: 1.7vw !important;
+  }
+}
 code {
   color: #e01a76;
 }
@@ -13,4 +17,18 @@ code {
   color: #fff;
   background-color: #1b6ec2;
   border-color: #1861ac;
+}
+
+@font-face {
+  font-family: 'PlayFair';
+  src: url('./assets/fonts/PlayfairDisplay-VariableFont_wght.ttf');
+}
+
+@font-face {
+  font-family: 'GT-Super';
+  src: url('./assets/fonts/GT-Super/GT-Super-Text-Black-Trial.otf');
+}
+@font-face {
+  font-family: 'Raleway';
+  src: url('./assets/fonts/Raleway-VariableFont_wght.ttf');
 }
