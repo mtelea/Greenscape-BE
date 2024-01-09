@@ -1,0 +1,95 @@
+@media (max-width: 900px) {
+    p {
+        font-size: 1.7vw !important;
+    }
+}
+
+.signup-redirect{
+    cursor: pointer;
+}
+.card {
+    color: #3b3630;
+}
+
+h1,
+h2,
+h3 {
+    font-family: GT-Super;
+    color: #3b3630 !important;
+}
+
+p {
+    font-family: GT-Super;
+    color: #3b3630 !important;
+}
+
+
+.signup-redirect {
+    text-align: center;
+    margin: 5%;
+}
+
+.signup-redirect::before {
+    content: '';
+    position: absolute;
+    width: 22%;
+    height: 1px;
+    border-radius: 4px;
+    background-color: #3b3630;
+    bottom: -1px;
+    left: 39%;
+    transform-origin: right;
+    transform: scaleX(0);
+    transition: transform .3s ease-in-out;
+}
+
+.signup-redirect:hover::before {
+    transform-origin: left;
+    transform: scaleX(1);
+}
+
+.signup-redirect {
+    color: #3b3630;
+    position: relative;
+    text-decoration: none;
+    transform: scale(1);
+    transition: transform 0.3s ease-in-out;
+}
+.signup-redirect:hover{
+    cursor: pointer;
+    transform: scale(1.15);
+}
+
+.login-title{
+    text-align: center;
+}
+.card{
+    padding: 4%;
+    font-family: Raleway;
+}
+
+form{
+    margin: 5%;
+    margin-bottom: 0% !important;
+}
+.btn {
+    display: block;
+    margin-left: auto;
+    margin-right:auto;
+    justify-content: center;
+    align-items: center;
+    width: fit-content !important;
+}
+
+.password-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    /* Adjust size, color as needed */
+}
+.rememberMe{
+    margin-top: 5%;
+    margin-left: 25vw;
+}
