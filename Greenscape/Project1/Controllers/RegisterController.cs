@@ -69,7 +69,6 @@ namespace Project1.Controllers
                 {
                     await _userManager.AddToRoleAsync(user, "Admin");
 
-                    await _signInManager.SignInAsync(user, isPersistent: true);
                     return Ok(new { Message = "Registration successful", UserId = user.Id });
                 }
 
@@ -92,7 +91,6 @@ namespace Project1.Controllers
                 {
                     await _userManager.AddToRoleAsync(user, "Manager");
 
-                    await _signInManager.SignInAsync(user, isPersistent: true);
                     return Ok(new { Message = "Registration successful", UserId = user.Id });
                 }
 
