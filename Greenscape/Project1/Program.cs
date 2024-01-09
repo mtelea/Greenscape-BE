@@ -33,6 +33,19 @@ builder.Services.AddDefaultIdentity<ApplicationUser>
 
 builder.Services.AddAuthorization();
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy =>
+                      {
+                          policy.WithOrigins("https://localhost:7211",
+                                              "https://localhost:44488")
+                          .AllowAnyHeader();
+                      });
+});
+
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.Events.OnRedirectToLogin = context =>
@@ -65,6 +78,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
+app.UseCors(MyAllowSpecificOrigins);
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
@@ -72,7 +86,6 @@ app.UseSwaggerUI(c =>
 });
 
 app.MapIdentityApi<ApplicationUser>();
-
 app.UseAuthentication();
 
 app.MapControllerRoute(

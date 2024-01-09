@@ -60,6 +60,8 @@
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.5.0" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="ClientApp\.angular\cache\14.0.3\angular-webpack\" />
+    <Folder Include="ClientApp\.angular\cache\14.0.3\babel-webpack\" />
     <Folder Include="Migrations\" />
   </ItemGroup>
 </Project>
