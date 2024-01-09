@@ -24,7 +24,6 @@ public DbSet<UserData> UserData { get; set; } = default!;
     {
         base.OnModelCreating(builder);
 
-        // Configure one-to-one relationship
         builder.Entity<ApplicationUser>()
             .HasOne(u => u.UserData)
             .WithOne(ud => ud.ApplicationUser)
