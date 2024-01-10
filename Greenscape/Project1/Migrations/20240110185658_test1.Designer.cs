@@ -12,8 +12,8 @@ using Project1.Data;
 namespace Project1.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240109221818_migrare")]
-    partial class migrare
+    [Migration("20240110185658_test1")]
+    partial class test1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -255,16 +255,43 @@ namespace Project1.Migrations
                     b.ToTable("Plant");
                 });
 
+            modelBuilder.Entity("Project1.Model.PointsHistory", b =>
+                {
+                    b.Property<int>("EntryID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EntryID"));
+
+                    b.Property<DateTime>("EntryDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("PointsModified")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Source")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("EntryID");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("PointsHistory");
+                });
+
             modelBuilder.Entity("Project1.Model.UserData", b =>
                 {
                     b.Property<string>("UserID")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("Points")
+                    b.Property<int?>("Points")
                         .HasColumnType("int");
 
                     b.Property<string>("ProfilePicture")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("UserID");
@@ -323,6 +350,17 @@ namespace Project1.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Project1.Model.PointsHistory", b =>
+                {
+                    b.HasOne("Project1.Model.ApplicationUser", "ApplicationUser")
+                        .WithMany("PointsHistory")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ApplicationUser");
+                });
+
             modelBuilder.Entity("Project1.Model.UserData", b =>
                 {
                     b.HasOne("Project1.Model.ApplicationUser", "ApplicationUser")
@@ -336,6 +374,8 @@ namespace Project1.Migrations
 
             modelBuilder.Entity("Project1.Model.ApplicationUser", b =>
                 {
+                    b.Navigation("PointsHistory");
+
                     b.Navigation("UserData")
                         .IsRequired();
                 });

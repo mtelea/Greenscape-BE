@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Project1.Migrations
 {
     /// <inheritdoc />
-    public partial class adminning : Migration
+    public partial class test1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -56,11 +56,11 @@ namespace Project1.Migrations
                 {
                     PlantID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    PlantName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PlantImage = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Type = table.Column<int>(type: "int", nullable: false),
-                    PlantSpecies = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PlantDescription = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    PlantName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PlantImage = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PlantSpecies = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PlantDescription = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
