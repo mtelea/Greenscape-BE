@@ -28,10 +28,23 @@ namespace Project1.Controllers
         }
 
         [HttpPost("set-user-profile-picture")]
-        public async Task<IActionResult> SetUserProfilePicture(string userId, string pictureLink)
+        public async Task<IActionResult> SetUserProfilePicture(string userId, IFormFile picture)
         {
+            if (picture == null || picture.Length == 0)
+            {
+                return BadRequest(new { Message = "Invalid picture file." });
+            }
+
             var user = await _userManager.FindByIdAsync(userId);
             var userData = await _context.UserData.FindAsync(userId);
+
+            var allowedExtensions = new[] { ".png", ".jpg", ".jpeg" };
+            var fileExtension = Path.GetExtension(picture.FileName).ToLower();
+
+            if (!allowedExtensions.Contains(fileExtension))
+            {
+                return BadRequest(new { Message = "Invalid file format. Only PNG, JPG, and JPEG files are allowed." });
+            }
 
             if (user == null)
             {
@@ -42,20 +55,47 @@ namespace Project1.Controllers
             {
                 UserData newUserData = new UserData();
                 newUserData.UserID = userId;
-                newUserData.ProfilePicture = pictureLink;
+                string newFileName = Guid.NewGuid().ToString();
+
+                var filePath = Path.Combine("wwwroot/images", $"{newFileName}{Path.GetExtension(picture.FileName)}");
+                var filePathToSave = Path.Combine("images", $"{newFileName}{Path.GetExtension(picture.FileName)}");
+
+                using (var fileStream = System.IO.File.Create(filePath))
+                {
+                    await picture.CopyToAsync(fileStream);
+                }
+
+                newUserData.ProfilePicture = filePathToSave;
                 _context.UserData.Add(newUserData);
             }
 
             else if (userData != null)
             {
-                userData.ProfilePicture = pictureLink;
-            }
+                if (userData.ProfilePicture != null)
+                {
+                    var oldFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", userData.ProfilePicture);
+                    if (System.IO.File.Exists(oldFilePath))
+                    {
+                        System.IO.File.Delete(oldFilePath);
+                    }
+                }
 
-            user.UserData.ProfilePicture = pictureLink;
+                string newFileName = Guid.NewGuid().ToString();
+
+                var filePath = Path.Combine("wwwroot/images", $"{newFileName}{Path.GetExtension(picture.FileName)}");
+                var filePathToSave = Path.Combine("images", $"{newFileName}{Path.GetExtension(picture.FileName)}");
+
+                using (var fileStream = System.IO.File.Create(filePath))
+                {
+                    await picture.CopyToAsync(fileStream);
+                }
+                userData.ProfilePicture = filePathToSave;
+            }
 
             try
             {
                 await _context.SaveChangesAsync();
+                return Ok(new { Message = "Profile picture set successfully." });
             }
             catch (Exception e)
             {
@@ -63,8 +103,34 @@ namespace Project1.Controllers
                 return BadRequest(new { Message = "Setting profile picture failed." });
 
             }
-            return Ok(new { Message = "Profile picture set successfully." });
 
+        }
+
+        [HttpPost("get-user-profile-picture")]
+        public async Task<IActionResult> GetUserProfilePicture(string userId)
+        {
+
+            var user = await _userManager.FindByIdAsync(userId);
+            var userData = await _context.UserData.FindAsync(userId);
+
+            if (user == null)
+            {
+                return NotFound(new { Message = "User was not found. Cannot get profile picture." });
+            }
+
+            if (userData == null)
+            {
+                return NotFound(new { Message = "User has no profile picture" });
+            }
+
+            else if (userData != null)
+            {
+                if (userData.ProfilePicture == null)
+                {
+                    return NotFound(new { Message = "User has no profile picture." });
+                }
+            }
+            return Ok(new { ProfilePicture = userData.ProfilePicture });
         }
 
         [HttpPost("update-user-points")]
