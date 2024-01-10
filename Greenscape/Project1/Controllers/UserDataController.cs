@@ -57,8 +57,8 @@ namespace Project1.Controllers
                 newUserData.UserID = userId;
                 string newFileName = Guid.NewGuid().ToString();
 
-                var filePath = Path.Combine("wwwroot/images", $"{newFileName}{Path.GetExtension(picture.FileName)}");
-                var filePathToSave = Path.Combine("images", $"{newFileName}{Path.GetExtension(picture.FileName)}");
+                var filePath = Path.Combine("wwwroot/images/profilepictures", $"{newFileName}{Path.GetExtension(picture.FileName)}");
+                var filePathToSave = Path.Combine("images/profilepictures", $"{newFileName}{Path.GetExtension(picture.FileName)}");
 
                 using (var fileStream = System.IO.File.Create(filePath))
                 {
@@ -82,8 +82,8 @@ namespace Project1.Controllers
 
                 string newFileName = Guid.NewGuid().ToString();
 
-                var filePath = Path.Combine("wwwroot/images", $"{newFileName}{Path.GetExtension(picture.FileName)}");
-                var filePathToSave = Path.Combine("images", $"{newFileName}{Path.GetExtension(picture.FileName)}");
+                var filePath = Path.Combine("wwwroot/images/profilepictures", $"{newFileName}{Path.GetExtension(picture.FileName)}");
+                var filePathToSave = Path.Combine("images/profilepictures", $"{newFileName}{Path.GetExtension(picture.FileName)}");
 
                 using (var fileStream = System.IO.File.Create(filePath))
                 {
