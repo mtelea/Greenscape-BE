@@ -112,6 +112,48 @@ namespace Project1.Controllers
 
             else if (userData != null)
             {
+                if (source.Contains("Course") == true || source.Contains("course") == true)
+                {
+                    try
+                    {
+                        var checkCourseHistory = await _context.PointsHistory
+                            .Where(ph => ph.UserID == userId && ph.Source == source)
+                            .FirstOrDefaultAsync();
+
+                        if (checkCourseHistory != null)
+                        {
+                            return Ok(new { Message = "Course has already been bought." });
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        System.Diagnostics.Debug.WriteLine(e);
+                        return BadRequest(new { Message = "Error checking course points history." });
+                    }
+                }
+
+                if (source.Contains("Daily") == true || source.Contains("daily") == true)
+                {
+                    try
+                    {
+                        DateTime twentyFourHoursAgo = DateTime.Now.Subtract(TimeSpan.FromHours(24));
+
+                        var checkDailyHistory = await _context.PointsHistory
+                            .Where(ph => ph.UserID == userId && ph.Source == "Daily" && ph.EntryDate >= twentyFourHoursAgo)
+                            .FirstOrDefaultAsync();
+
+                        if (checkDailyHistory != null)
+                        {
+                            return BadRequest(new { Message = "Daily Check-In Bonus has already been claimed in the last 24h." });
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        System.Diagnostics.Debug.WriteLine(e);
+                        return BadRequest(new { Message = "Error checking daily points history." });
+                    }
+                }
+
                 if ((userData.Points + points * operationSign) < 0)
                 {
                     return BadRequest(new { Message = "Points cannot go lower than 0", UserId = user.Id });
