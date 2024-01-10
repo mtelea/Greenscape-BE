@@ -50,6 +50,13 @@ namespace Project1.Controllers
                 return BadRequest("Plant data is invalid");
             }
 
+            var validPlantTypes = new List<string> { "legume", "fructe", "flori" };
+
+            if (!validPlantTypes.Contains(newPlant.Type?.ToLower()))
+            {
+                return BadRequest("Plant type not valid!");
+            }
+
             var existingPlant = await _context.Plant.FirstOrDefaultAsync(p => p.PlantName == newPlant.PlantName);
             if (existingPlant != null)
             {
@@ -77,6 +84,151 @@ namespace Project1.Controllers
 
             return NoContent();
         }
+
+        [HttpGet("getAll")]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult<IEnumerable<Plant>>> GetAllPlants()
+        {
+            var plants = await _context.Plant.ToListAsync();
+
+            if (plants == null || plants.Count == 0)
+            {
+                return NotFound("No plants found");
+            }
+
+            return Ok(plants);
+        }
+
+        [HttpPut("update/{plantId}/name")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> UpdatePlantName(int plantId, [FromBody] string newName)
+        {
+            var plantToUpdate = await _context.Plant.FirstOrDefaultAsync(p => p.PlantID == plantId);
+            if (plantToUpdate == null)
+            {
+                return NotFound("Plant not found");
+            }
+
+            plantToUpdate.PlantName = newName;
+            await _context.SaveChangesAsync();
+
+            return Ok("Updated successfully");
+        }
+
+        [HttpPut("update/{plantId}/image")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> UpdatePlantImage(int plantId, [FromBody] string newImage)
+        {
+            var plantToUpdate = await _context.Plant.FirstOrDefaultAsync(p => p.PlantID == plantId);
+            if (plantToUpdate == null)
+            {
+                return NotFound("Plant not found");
+            }
+
+            plantToUpdate.PlantImage = newImage;
+            await _context.SaveChangesAsync();
+
+            return Ok("Updated successfully");
+        }
+
+        [HttpPut("update/{plantId}/type")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> UpdatePlantType(int plantId, [FromBody] string newType)
+        {
+            var plantToUpdate = await _context.Plant.FirstOrDefaultAsync(p => p.PlantID == plantId);
+            if (plantToUpdate == null)
+            {
+                return NotFound("Plant not found");
+            }
+
+            var validPlantTypes = new List<string> { "legume", "fructe", "flori" };
+
+            if (!validPlantTypes.Contains(newType.ToLower()))
+            {
+                return BadRequest("Plant type not valid!");
+            }
+
+            plantToUpdate.Type = newType;
+            await _context.SaveChangesAsync();
+
+            return Ok("Updated successfully");
+        }
+
+        [HttpPut("update/{plantId}/species")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> UpdatePlantSpecies(int plantId, [FromBody] string newSpecies)
+        {
+            var plantToUpdate = await _context.Plant.FirstOrDefaultAsync(p => p.PlantID == plantId);
+            if (plantToUpdate == null)
+            {
+                return NotFound("Plant not found");
+            }
+
+            plantToUpdate.PlantSpecies = newSpecies;
+            await _context.SaveChangesAsync();
+
+            return Ok("Updated successfully");
+        }
+
+        [HttpPut("update/{plantId}/description")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> UpdatePlantDescription(int plantId, [FromBody] string newDescription)
+        {
+            var plantToUpdate = await _context.Plant.FirstOrDefaultAsync(p => p.PlantID == plantId);
+            if (plantToUpdate == null)
+            {
+                return NotFound("Plant not found");
+            }
+
+            plantToUpdate.PlantDescription = newDescription;
+            await _context.SaveChangesAsync();
+
+            return Ok("Updated successfully");
+        }
+
+
+        [HttpGet("getByType/legume")]
+        [Authorize(Roles = "User")]
+        public async Task<ActionResult<IEnumerable<Plant>>> GetLegume()
+        {
+            var legume = await _context.Plant.Where(p => p.Type == "legume").ToListAsync();
+
+            if (legume == null || legume.Count == 0)
+            {
+                return NotFound("Nu s-au gasit legume");
+            }
+
+            return Ok(legume);
+        }
+
+        [HttpGet("getByType/fructe")]
+        [Authorize(Roles = "User")]
+        public async Task<ActionResult<IEnumerable<Plant>>> GetFructe()
+        {
+            var fructe = await _context.Plant.Where(p => p.Type == "fructe").ToListAsync();
+
+            if (fructe == null || fructe.Count == 0)
+            {
+                return NotFound("Nu s-au gasit fructe");
+            }
+
+            return Ok(fructe);
+        }
+
+        [HttpGet("getByType/flori")]
+        [Authorize(Roles = "User")]
+        public async Task<ActionResult<IEnumerable<Plant>>> GetFlori()
+        {
+            var flori = await _context.Plant.Where(p => p.Type == "flori").ToListAsync();
+
+            if (flori == null || flori.Count == 0)
+            {
+                return NotFound("Nu s-au gasit flori");
+            }
+
+            return Ok(flori);
+        }
+
 
 
     }
