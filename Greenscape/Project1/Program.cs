@@ -32,6 +32,7 @@ builder.Services.AddDefaultIdentity<ApplicationUser>
 .AddEntityFrameworkStores<AppDbContext>();
 
 builder.Services.AddAuthorization();
+builder.Services.AddScoped<PointsHistory>();
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
