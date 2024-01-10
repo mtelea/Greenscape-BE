@@ -40,7 +40,7 @@ namespace Project1.Controllers
             return Ok(plant);
         }
 
-
+        // TODO: Image upload on add plant
         [HttpPost("add")]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<Plant>> AddPlant([FromBody] PlantDto newPlant)
@@ -115,20 +115,65 @@ namespace Project1.Controllers
             return Ok("Updated successfully");
         }
 
-        [HttpPut("update/{plantId}/image")]
+        [HttpPost("update/{plantId}/image")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> UpdatePlantImage(int plantId, [FromBody] string newImage)
+        public async Task<IActionResult> UpdatePlantImage(int plantId, IFormFile picture)
         {
+            var allowedExtensions = new[] { ".png", ".jpg", ".jpeg" };
+            var fileExtension = Path.GetExtension(picture.FileName).ToLower();
+
+            if (!allowedExtensions.Contains(fileExtension))
+            {
+                return BadRequest(new { Message = "Invalid file format. Only PNG, JPG, and JPEG files are allowed." });
+            }
+
             var plantToUpdate = await _context.Plant.FirstOrDefaultAsync(p => p.PlantID == plantId);
+
+            if (plantToUpdate == null)
+            {
+                return NotFound("Plant not found");
+            }
+            if (picture == null || picture.Length == 0)
+            {
+                return BadRequest(new { Message = "Invalid picture file." });
+            }
+
             if (plantToUpdate == null)
             {
                 return NotFound("Plant not found");
             }
 
-            plantToUpdate.PlantImage = newImage;
-            await _context.SaveChangesAsync();
+            if (plantToUpdate.PlantImage != null) 
+            {
+                var oldFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", plantToUpdate.PlantImage);
+                if (System.IO.File.Exists(oldFilePath))
+                {
+                    System.IO.File.Delete(oldFilePath);
+                }
+            }
 
-            return Ok("Updated successfully");
+            string newFileName = Guid.NewGuid().ToString();
+
+            var filePath = Path.Combine("wwwroot/images/plants", $"{newFileName}{Path.GetExtension(picture.FileName)}");
+            var filePathToSave = Path.Combine("images/plants", $"{newFileName}{Path.GetExtension(picture.FileName)}");
+
+            using (var fileStream = System.IO.File.Create(filePath))
+            {
+                await picture.CopyToAsync(fileStream);
+            }
+            plantToUpdate.PlantImage = filePathToSave;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+                return Ok(new { Message = "Plant picture set successfully." });
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+                return BadRequest(new { Message = "Setting plant picture failed." });
+
+            }
         }
 
         [HttpPut("update/{plantId}/type")]
