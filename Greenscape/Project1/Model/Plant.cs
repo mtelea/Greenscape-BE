@@ -37,14 +37,6 @@ namespace Project1.Model
         {
         }
 
-/*        public enum PlantType
-        {
-            Vegetable,
-            Fruit,
-            Flower,
-            Tree
-        }*/
-
 
     }
 }
