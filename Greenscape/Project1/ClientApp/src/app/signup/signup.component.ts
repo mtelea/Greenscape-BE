@@ -8,6 +8,7 @@ function passwordMatcher(c: AbstractControl): { [key: string]: boolean } | null 
   const passwordControl = c.get('password');
   const confirmControl = c.get('confirmPassword');
 
+
   if (passwordControl?.pristine || confirmControl?.pristine) {
     return null;
   }
@@ -28,6 +29,7 @@ export class SignupComponent implements OnInit {
   signup = new Signup();
   passwordMessage = '';
   showPassword = false;
+  registrationSuccess = false
 
   private validationMessages: any = {
     required: 'Please choose a password.',
@@ -76,6 +78,8 @@ export class SignupComponent implements OnInit {
         .subscribe(
           (response) => {
             console.log('API Response:', response);
+            this.signupForm.reset();
+            this.registrationSuccess = true;
           },
           (error) => {
             console.error('API Error:', error);

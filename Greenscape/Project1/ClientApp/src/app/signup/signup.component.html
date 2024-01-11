@@ -59,21 +59,22 @@
         <label class="col-md-2 col-form-label" for="confirmPasswordId"></label>
         <div class="col-md-8 position-relative">
           <div class="input-group">
-          <input class="form-control" id="confirmPasswordId" type="password" placeholder="confirm password (required)"
-            formControlName="confirmPassword" [ngClass]="{'is-invalid': signupForm.get('passwordGroup')?.errors ||
+            <input class="form-control" id="confirmPasswordId" type="password" placeholder="confirm password (required)"
+              formControlName="confirmPassword" [ngClass]="{'is-invalid': signupForm.get('passwordGroup')?.errors ||
                                              ((signupForm.get('passwordGroup.confirmPassword')?.touched || 
                                               signupForm.get('passwordGroup.confirmPassword')?.dirty) && 
                                               !signupForm.get('passwordGroup.confirmPassword')?.valid) }" />
-          <i class="fa-regular fa-eye position-absolute" style="right: 10px; top: 10px; cursor: pointer;"
-            (click)="togglePasswordVisibility()"></i>
-          <span class="invalid-feedback">
-            <span *ngIf="signupForm.get('passwordGroup.confirmPassword')?.errors?.required">
-              Please confirm your password.
+            <i class="fa-regular fa-eye position-absolute" style="right: 10px; top: 10px; cursor: pointer;"
+              (click)="togglePasswordVisibility()"></i>
+            <span class="invalid-feedback">
+              <span *ngIf="signupForm.get('passwordGroup.confirmPassword')?.errors?.required">
+                Please confirm your password.
+              </span>
+              <span *ngIf="signupForm.get('passwordGroup')?.errors?.match">
+                The passwords do not match.
+              </span>
             </span>
-            <span *ngIf="signupForm.get('passwordGroup')?.errors?.match">
-              The passwords do not match.
-            </span>
-          </span></div>
+          </div>
         </div>
       </div>
     </div>
@@ -82,13 +83,14 @@
   </form>
 
 
-  <button class="btn btn-dark" type="submit" style="width:80px"
-          (click)="Register()"
+  <button class="btn btn-dark" type="submit" style="width:80px" (click)="Register()"
     [title]="signupForm.valid ? 'Save your entered data' : 'Disabled until the form data is valid'"
     [disabled]="!signupForm.valid">
     Inscrie-te
   </button>
 
+  <p class="registrationSuccess" *ngIf="registrationSuccess">Înregistrare realizată cu succes! Conectarea dumneavoastră
+    la cont a fost efectuată.</p>
 
 </div>
 <br>Value: {{ signupForm.value | json }}

@@ -1,0 +1,123 @@
+.profile-container {
+    color: var(--bs-body-color);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas:
+        "z-about z-about z-profile "
+        "z-options z-options z-profile  ";
+}
+
+.options-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+        "logout changepass";
+}
+#logout{
+    grid-area: logout;
+    margin: 5%;
+    margin-left: 0;
+    width: 100%;
+}
+#changepass{
+    grid-area: changepass;
+    margin: 5%;
+    margin-right: 0;
+    width: 100%;
+}
+
+.btn:hover{
+    background-color: #2e3339;
+    cursor: pointer;
+}
+
+#profile-area {
+    grid-area: z-profile;
+    margin: 4%;
+    padding: 5%;
+    color: white;
+    background-color: #8F9779;
+    border-color: #8F9779;
+}
+
+#about-area {
+    grid-area: z-about;
+    margin: 4%;
+    padding: 5%;
+}
+
+#options-area {
+    grid-area: z-options;
+    margin: 4%;
+    padding: 5%;
+}
+
+#profile-area img{
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media (max-width: 900px) {
+    #profile-area img{
+        width: 100px;
+        height: 100px;
+    }
+    #edit-icon {
+        font-size: smaller;
+        bottom: 0px !important;
+        right: 0px !important;
+    }
+  }
+
+#profile-area>h5,p{
+    text-align: center;
+    margin: 5%;
+}
+
+#checkin:hover{
+    background-color: white !important;
+    border-color: white !important;
+    box-shadow: 0 0 10px white;
+}
+#checkin{
+    background-color: white !important;
+    border-color: white !important;
+}
+
+h5{
+    font-family: GT-Super;
+}
+
+.card{
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.40);
+    border-radius: 20px;
+}
+p{
+    font-family: Raleway
+}
+
+#edit-icon {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    color: white;
+    cursor: pointer;
+}
+#edit-icon:hover{
+    color: lightgrey;
+}
+.buttons{
+    margin-left: auto;
+    margin-right: auto;
+}
+.btn{
+    background-color: #8F9779;
+    border-color: #8F9779;
+}
+.btn:hover{
+    background-color: #80876C;
+    border-color: #80876C;
+}
