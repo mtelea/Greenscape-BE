@@ -68,7 +68,11 @@ export class SignupComponent implements OnInit {
         confirmPassword: confirmPassword
       };
 
-      this.httpClient.post(url, requestBody)
+      const httpOptions = {
+        withCredentials: true
+      };
+
+      this.httpClient.post(url, requestBody, httpOptions)
         .subscribe(
           (response) => {
             console.log('API Response:', response);
