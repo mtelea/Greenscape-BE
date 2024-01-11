@@ -2,8 +2,13 @@ a.navbar-brand {
   white-space: normal;
   text-align: center;
   word-break: break-all;
-  color: white !important;
+  color: rgba(255,255,255,.55);
+  font-size: 22px;
 }
+.navbar{
+  background-color: #8F9779;
+}
+/* 4F7942  8A9A5B 8F9779 679267 355E3B*/
 
 html {
   font-size: 14px;
@@ -22,7 +27,7 @@ html {
   font-family: Raleway;
   text-transform: uppercase;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 20px;
   opacity: 0.75;
 }
 

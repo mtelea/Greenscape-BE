@@ -1,10 +1,14 @@
-.btn {
+.btn, .registrationSuccess {
     display: block;
     margin-left: auto;
     margin-right:auto;
     justify-content: center;
     align-items: center;
     width: fit-content !important;
+}
+
+.registrationSuccess{
+    margin-top: 5%;
 }
 
 .card{
@@ -17,7 +21,7 @@ form{
 }
 
 .signup-title {
-    color: #3b3630;
+    color: var(--bs-body-color);
     text-align: center;
 }
 
@@ -31,5 +35,12 @@ h3 {
 p {
     font-family: Raleway;
 }
-
+.btn{
+    background-color: #8F9779;
+    border-color: #8F9779;
+}
+.btn:hover{
+    background-color: #80876C;
+    border-color: #80876C;
+}
 

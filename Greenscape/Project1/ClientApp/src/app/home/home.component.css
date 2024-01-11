@@ -5,7 +5,7 @@
 }
 
 .home-page {
-    color: #3b3630;
+    color: var(--bs-body-color);
 }
 
 h1,
@@ -49,7 +49,7 @@ h2 {
 
 .card-title {
     font-size: 2vw;
-    color: #3b3630;
+    color: var(--bs-body-color);
     text-align: center;
     font-family: Raleway;
     font-weight: 400;
@@ -103,7 +103,7 @@ h2 {
     width: 19%;
     height: 2px;
     border-radius: 4px;
-    background-color: #3b3630;
+    background-color:var(--bs-body-color) ;
     bottom: -1px;
     left: 40%;
     transform-origin: right;
@@ -117,7 +117,7 @@ h2 {
 }
 
 .home-login-redirect {
-    color: #3b3630;
+    color: var(--bs-body-color);
     position: relative;
     text-decoration: none;
     transform: scale(1);
@@ -126,4 +126,7 @@ h2 {
 .home-login-redirect:hover{
     cursor: pointer;
     transform: scale(1.15);
+}
+.card-header{
+    background-color: white;
 }
