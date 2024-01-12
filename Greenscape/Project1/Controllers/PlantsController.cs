@@ -42,7 +42,7 @@ namespace Project1.Controllers
 
         // TODO: Image upload on add plant
         [HttpPost("add")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, User")]
         public async Task<ActionResult<Plant>> AddPlant([FromBody] PlantDto newPlant)
         {
             if (newPlant == null)
@@ -70,7 +70,7 @@ namespace Project1.Controllers
         }
 
         [HttpDelete("delete/{plantId}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, User")]
         public async Task<IActionResult> DeletePlant(int plantId)
         {
             var plantToRemove = await _context.Plant.FirstOrDefaultAsync(p => p.PlantID == plantId);
@@ -100,7 +100,7 @@ namespace Project1.Controllers
         }
 
         [HttpPut("update/{plantId}/name")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, User")]
         public async Task<IActionResult> UpdatePlantName(int plantId, [FromBody] string newName)
         {
             var plantToUpdate = await _context.Plant.FirstOrDefaultAsync(p => p.PlantID == plantId);
@@ -116,7 +116,7 @@ namespace Project1.Controllers
         }
 
         [HttpPost("update/{plantId}/image")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, User")]
         public async Task<IActionResult> UpdatePlantImage(int plantId, IFormFile picture)
         {
             var allowedExtensions = new[] { ".png", ".jpg", ".jpeg" };
@@ -177,7 +177,7 @@ namespace Project1.Controllers
         }
 
         [HttpPut("update/{plantId}/type")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, User")]
         public async Task<IActionResult> UpdatePlantType(int plantId, [FromBody] string newType)
         {
             var plantToUpdate = await _context.Plant.FirstOrDefaultAsync(p => p.PlantID == plantId);
@@ -200,7 +200,7 @@ namespace Project1.Controllers
         }
 
         [HttpPut("update/{plantId}/species")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, User")]
         public async Task<IActionResult> UpdatePlantSpecies(int plantId, [FromBody] string newSpecies)
         {
             var plantToUpdate = await _context.Plant.FirstOrDefaultAsync(p => p.PlantID == plantId);
@@ -216,7 +216,7 @@ namespace Project1.Controllers
         }
 
         [HttpPut("update/{plantId}/description")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, User")]
         public async Task<IActionResult> UpdatePlantDescription(int plantId, [FromBody] string newDescription)
         {
             var plantToUpdate = await _context.Plant.FirstOrDefaultAsync(p => p.PlantID == plantId);
