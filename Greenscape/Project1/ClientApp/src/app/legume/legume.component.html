@@ -1,1 +1,13 @@
-<p>legume works!</p>
+<div>
+  <div>
+    <div class='col-md-2'>Filter by:</div>
+    <input type='text' [(ngModel)]='listFilter' />
+  </div>
+  <div *ngFor='let product of filteredProducts'>
+    <p>{{product.plantName}}</p>
+  </div>
+
+</div>
+<div *ngIf='errorMessage' class='alert alert-danger'>
+  Error: {{ errorMessage }}
+</div>

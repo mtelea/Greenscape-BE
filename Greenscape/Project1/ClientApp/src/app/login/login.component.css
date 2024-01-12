@@ -33,7 +33,6 @@ p {
     content: '';
     position: absolute;
     width: 22%;
-    height: 1px;
     border-radius: 4px;
     background-color: var(--bs-body-color);
     bottom: -1px;
