@@ -12,7 +12,11 @@ export class LegumeService {
   constructor(private http: HttpClient) { }
 
   getProducts(): Observable<IPlant[]> {
-    return this.http.get<IPlant[]>(this.productUrl)
+    const httpOptions = {
+      withCredentials: true
+    };
+
+    return this.http.get<IPlant[]>(this.productUrl, httpOptions)
       .pipe(
         tap(data => console.log('All: ', JSON.stringify(data))),
         catchError(this.handleError)

@@ -28,7 +28,7 @@ namespace Project1.Controllers
         }
 
         [HttpGet("get/{plantId}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, User")]
         public async Task<ActionResult<Plant>> GetPlantById(int plantId)
         {
             var plant = await _context.Plant.FirstOrDefaultAsync(p => p.PlantID == plantId);
@@ -86,7 +86,7 @@ namespace Project1.Controllers
         }
 
         [HttpGet("getAll")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, User")]
         public async Task<ActionResult<IEnumerable<Plant>>> GetAllPlants()
         {
             var plants = await _context.Plant.ToListAsync();
@@ -233,7 +233,7 @@ namespace Project1.Controllers
 
 
         [HttpGet("getByType/legume")]
-        [Authorize(Roles = "User")]
+        [Authorize(Roles = "Admin, User")]
         public async Task<ActionResult<IEnumerable<Plant>>> GetLegume()
         {
             var legume = await _context.Plant.Where(p => p.Type == "legume").ToListAsync();
@@ -247,7 +247,7 @@ namespace Project1.Controllers
         }
 
         [HttpGet("getByType/fructe")]
-        [Authorize(Roles = "User")]
+        [Authorize(Roles = "Admin, User")]
         public async Task<ActionResult<IEnumerable<Plant>>> GetFructe()
         {
             var fructe = await _context.Plant.Where(p => p.Type == "fructe").ToListAsync();
@@ -261,7 +261,7 @@ namespace Project1.Controllers
         }
 
         [HttpGet("getByType/flori")]
-        [Authorize(Roles = "User")]
+        [Authorize(Roles = "Admin, User")]
         public async Task<ActionResult<IEnumerable<Plant>>> GetFlori()
         {
             var flori = await _context.Plant.Where(p => p.Type == "flori").ToListAsync();
