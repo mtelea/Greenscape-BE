@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -99,17 +100,43 @@ namespace Project1.Controllers
             return Ok(plants);
         }
 
-        [HttpPut("update/{plantId}/name")]
+        /*        [HttpPut("update/{plantId}/name")]
+                [Authorize(Roles = "Admin, User")]
+                public async Task<IActionResult> UpdatePlantName(int plantId, [FromBody] string newName)
+                {
+                    var plantToUpdate = await _context.Plant.FirstOrDefaultAsync(p => p.PlantID == plantId);
+                    if (plantToUpdate == null)
+                    {
+                        return NotFound("Plant not found");
+                    }
+
+                    plantToUpdate.PlantName = newName;
+                    await _context.SaveChangesAsync();
+
+                    return Ok("Updated successfully");
+                }*/
+
+        [HttpPost("update/{plantId}")]
         [Authorize(Roles = "Admin, User")]
-        public async Task<IActionResult> UpdatePlantName(int plantId, [FromBody] string newName)
-        {
+        public async Task<IActionResult> UpdatePlant(int plantId, [FromBody] Plant newPlant) {
             var plantToUpdate = await _context.Plant.FirstOrDefaultAsync(p => p.PlantID == plantId);
             if (plantToUpdate == null)
             {
                 return NotFound("Plant not found");
             }
 
-            plantToUpdate.PlantName = newName;
+            var validPlantTypes = new List<string> { "legume", "fructe", "flori" };
+
+            if (!validPlantTypes.Contains(newPlant.Type.ToLower()))
+            {
+                return BadRequest("Plant type not valid!");
+            }
+
+            plantToUpdate.PlantName = newPlant.PlantName;
+            plantToUpdate.Type = newPlant.Type;
+            plantToUpdate.PlantSpecies = newPlant.PlantSpecies;
+            plantToUpdate.PlantDescription = newPlant.PlantDescription;
+
             await _context.SaveChangesAsync();
 
             return Ok("Updated successfully");
@@ -176,7 +203,7 @@ namespace Project1.Controllers
             }
         }
 
-        [HttpPut("update/{plantId}/type")]
+        /*[HttpPut("update/{plantId}/type")]
         [Authorize(Roles = "Admin, User")]
         public async Task<IActionResult> UpdatePlantType(int plantId, [FromBody] string newType)
         {
@@ -197,9 +224,9 @@ namespace Project1.Controllers
             await _context.SaveChangesAsync();
 
             return Ok("Updated successfully");
-        }
+        }*/
 
-        [HttpPut("update/{plantId}/species")]
+        /*[HttpPut("update/{plantId}/species")]
         [Authorize(Roles = "Admin, User")]
         public async Task<IActionResult> UpdatePlantSpecies(int plantId, [FromBody] string newSpecies)
         {
@@ -213,9 +240,9 @@ namespace Project1.Controllers
             await _context.SaveChangesAsync();
 
             return Ok("Updated successfully");
-        }
+        }*/
 
-        [HttpPut("update/{plantId}/description")]
+        /*[HttpPut("update/{plantId}/description")]
         [Authorize(Roles = "Admin, User")]
         public async Task<IActionResult> UpdatePlantDescription(int plantId, [FromBody] string newDescription)
         {
@@ -229,7 +256,7 @@ namespace Project1.Controllers
             await _context.SaveChangesAsync();
 
             return Ok("Updated successfully");
-        }
+        }*/
 
 
         [HttpGet("getByType/legume")]
