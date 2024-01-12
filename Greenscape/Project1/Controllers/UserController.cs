@@ -77,22 +77,18 @@ namespace Project1.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteUserByEmail([FromQuery] string email)
         {
-            // Check if the current user has the "Admin" role
             if (!User.IsInRole("Admin"))
             {
                 return Forbid();
             }
 
-            // Find the user by email
             var userToDelete = await _userManager.FindByEmailAsync(email);
 
-            // Check if the user exists
             if (userToDelete == null)
             {
                 return NotFound(new { Message = "User not found." });
             }
 
-            // Delete the user
             var result = await _userManager.DeleteAsync(userToDelete);
 
             if (result.Succeeded)

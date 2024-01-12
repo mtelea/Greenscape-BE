@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
@@ -28,14 +30,18 @@ namespace Project1.Controllers
         }
 
         [HttpPost("set-user-profile-picture")]
-        public async Task<IActionResult> SetUserProfilePicture(string userId, IFormFile picture)
+        [Authorize(Roles = "Admin, User")]
+        public async Task<IActionResult> SetUserProfilePicture(IFormFile picture)
         {
+
             if (picture == null || picture.Length == 0)
             {
                 return BadRequest(new { Message = "Invalid picture file." });
             }
 
-            var user = await _userManager.FindByIdAsync(userId);
+            var username = User.FindFirstValue(ClaimTypes.Name);
+            var user = await _userManager.FindByNameAsync(username);
+            var userId = await _userManager.GetUserIdAsync(user);
             var userData = await _context.UserData.FindAsync(userId);
 
             var allowedExtensions = new[] { ".png", ".jpg", ".jpeg" };
@@ -107,10 +113,12 @@ namespace Project1.Controllers
         }
 
         [HttpPost("get-user-profile-picture")]
-        public async Task<IActionResult> GetUserProfilePicture(string userId)
+        [Authorize(Roles = "Admin, User")]
+        public async Task<IActionResult> GetUserProfilePicture()
         {
-
-            var user = await _userManager.FindByIdAsync(userId);
+            var username = User.FindFirstValue(ClaimTypes.Name);
+            var user = await _userManager.FindByNameAsync(username);
+            var userId = await _userManager.GetUserIdAsync(user);
             var userData = await _context.UserData.FindAsync(userId);
 
             if (user == null)
@@ -134,9 +142,12 @@ namespace Project1.Controllers
         }
 
         [HttpPost("update-user-points")]
-        public async Task<IActionResult> UpdateUserPoints(string userId, int points, string operation, string source)
+        [Authorize(Roles = "Admin, User")]
+        public async Task<IActionResult> UpdateUserPoints(int points, string operation, string source)
         {
-            var user = await _userManager.FindByIdAsync(userId);
+            var username = User.FindFirstValue(ClaimTypes.Name);
+            var user = await _userManager.FindByNameAsync(username);
+            var userId = await _userManager.GetUserIdAsync(user);
             var userData = await _context.UserData.FindAsync(userId);
             var operationSign = 1;
 
@@ -251,6 +262,7 @@ namespace Project1.Controllers
         }
 
         [HttpPost("set-user-points")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> SetUserPoints(string userId, int points)
         {
             var user = await _userManager.FindByIdAsync(userId);
@@ -299,6 +311,7 @@ namespace Project1.Controllers
 
         // GET: api/UserData
         [HttpGet]
+        [Authorize(Roles = "Admin, User")]
         public async Task<ActionResult<IEnumerable<UserData>>> GetUserData()
         {
             return await _context.UserData.ToListAsync();
@@ -306,6 +319,7 @@ namespace Project1.Controllers
 
         // GET: api/UserData/5
         [HttpGet("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<UserData>> GetUserData(string id)
         {
             var userData = await _context.UserData.FindAsync(id);
@@ -321,6 +335,7 @@ namespace Project1.Controllers
         // PUT: api/UserData/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> PutUserData(string id, UserData userData)
         {
             if (id != userData.UserID)
@@ -352,6 +367,7 @@ namespace Project1.Controllers
         // POST: api/UserData
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<UserData>> PostUserData(UserData userData)
         {
             _context.UserData.Add(userData);
@@ -376,6 +392,7 @@ namespace Project1.Controllers
 
         // DELETE: api/UserData/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteUserData(string id)
         {
             var userData = await _context.UserData.FindAsync(id);

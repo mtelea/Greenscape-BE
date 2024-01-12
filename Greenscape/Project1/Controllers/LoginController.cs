@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Project1.Model;
+using System.Security.Claims;
 
 namespace Project1.Controllers
 {
@@ -19,7 +20,7 @@ namespace Project1.Controllers
             _userManager = userManager;
         }
 
-        [HttpPost]
+        [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginModel model)
         {
             if (ModelState.IsValid)
@@ -35,6 +36,20 @@ namespace Project1.Controllers
             }
 
             return BadRequest(new { Message = "Invalid login data" });
+        }
+
+        [HttpPost("logout")]
+        public async Task<IActionResult> LogOut()
+        {
+            var username = User.FindFirstValue(ClaimTypes.Name);
+            if (username == null)
+            {
+                return BadRequest(new { Message = "You are not logged in." });
+            }
+
+            await _signInManager.SignOutAsync();
+            return Ok(new { Message = "Signed out successfully" });
+                
         }
 
     }
