@@ -1,0 +1,26 @@
+[
+    {
+      "plantID": 2,
+      "plantName": "castravete",
+      "plantImage": "ssdsdds",
+      "type": "legume",
+      "plantSpecies": "sfsjfw",
+      "plantDescription": "fsfsfr"
+    },
+    {
+      "plantID": 5,
+      "plantName": "Roșie",
+      "plantImage": "rosie_image.jpg",
+      "type": "legume",
+      "plantSpecies": "Solanum lycopersicum",
+      "plantDescription": "Roșia este o legumă delicioasă și sănătoasă, adesea utilizată în preparate culinare de vară."
+    },
+    {
+      "plantID": 8,
+      "plantName": "Morcov",
+      "plantImage": "morcov_image.jpg",
+      "type": "legume",
+      "plantSpecies": "Daucus carota",
+      "plantDescription": "Morcovul este o legumă rădăcinoasă, bogată în beta-caroten, beneficiu pentru sănătatea ochilor."
+    }
+  ]

@@ -7,7 +7,7 @@ import { IPlant } from "../shared/IPlant";
   providedIn: 'root'
 })
 export class LegumeService {
-  private productUrl = 'https://localhost:7211/plants/getByType/legume';
+  private productUrl = 'legume.json';
 
   constructor(private http: HttpClient) { }
 
