@@ -18,7 +18,7 @@ var secretConfiguration = new ConfigurationBuilder()
 builder.Services.AddScoped<PlantMapper>();
 builder.Services.AddDbContext<AppDbContext>(options =>
         options.UseSqlServer(secretConfiguration["DefaultConnection"]));
-builder.Services.AddDefaultIdentity<ApplicationUser>
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>
     (options =>
     {
         options.SignIn.RequireConfirmedAccount = false;
@@ -30,7 +30,7 @@ builder.Services.AddDefaultIdentity<ApplicationUser>
         options.User.RequireUniqueEmail = true;
 
     })
-.AddRoles<IdentityRole>()
+/*.AddRoles<IdentityRole>()*/
 .AddEntityFrameworkStores<AppDbContext>();
 
 builder.Services.AddAuthorization();
@@ -89,7 +89,7 @@ app.UseSwaggerUI(c =>
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Test API");
 });
 
-app.MapIdentityApi<ApplicationUser>();
+/*app.MapIdentityApi<ApplicationUser>();*/
 app.UseAuthentication();
 
 app.MapControllerRoute(

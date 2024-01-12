@@ -28,7 +28,11 @@ export class LoginComponent implements OnInit {
     console.log(this.loginForm);
     console.log('Saved: ' + JSON.stringify(this.loginForm.value));
 
-    this.http.post('https://localhost:7211/api/Login', this.loginForm.value)
+    const httpOptions = {
+      withCredentials: true
+    };
+
+    this.http.post('https://localhost:7211/api/Login/login', this.loginForm.value, httpOptions)
       .subscribe(response => {
         console.log('Response:', response);
       }, error => {
