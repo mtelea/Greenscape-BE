@@ -20,7 +20,7 @@ h3 {
 
 p {
     font-family: GT-Super;
-    color: var(--bs-body-color) !important;
+    color: var(--bs-body-color);
 }
 
 

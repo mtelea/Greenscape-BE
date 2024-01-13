@@ -369,8 +369,7 @@ namespace Project1.Migrations
                 {
                     b.Navigation("PointsHistory");
 
-                    b.Navigation("UserData")
-                        .IsRequired();
+                    b.Navigation("UserData");
                 });
 #pragma warning restore 612, 618
         }

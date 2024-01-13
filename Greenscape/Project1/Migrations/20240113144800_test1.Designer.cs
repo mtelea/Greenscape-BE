@@ -12,8 +12,8 @@ using Project1.Data;
 namespace Project1.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240112220043_firstone")]
-    partial class firstone
+    [Migration("20240113144800_test1")]
+    partial class test1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -372,8 +372,7 @@ namespace Project1.Migrations
                 {
                     b.Navigation("PointsHistory");
 
-                    b.Navigation("UserData")
-                        .IsRequired();
+                    b.Navigation("UserData");
                 });
 #pragma warning restore 612, 618
         }

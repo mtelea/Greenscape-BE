@@ -1,15 +1,22 @@
 <div class="profile-container">
-    <div id="profile-area" class="card d-flex align-items-center justify-content-center">
-        <div class="image-container position-relative">
-            <img class="card-img-top" src="../../assets/photos/profile_pic_4.jpg" alt="Profile picture">
-            <i id="edit-icon" class="fa-solid fa-pen-to-square" (click)="editPicture()"></i>
-        </div>
-        <h5>{{points}} p</h5>
-        <button id="checkin" class="btn btn-light"
-        (click)="dailyCheckin()">
-            Check-in
-        </button>
+  <div id="profile-area" class="card d-flex align-items-center justify-content-center">
+    <div class="image-container position-relative">
+      <img class="card-img-top" src="{{profilePicture}}" alt="Profile picture">
+      <i id="edit-icon" class="fa-solid fa-pen-to-square" (click)="fileInput.click()"></i>
+      <input type="file" #fileInput style="display: none;" (change)="editPicture($event)">
     </div>
+    <h5>{{points}} p</h5>
+    <button id="checkin" class="btn btn-light"
+            (click)="dailyCheckin()">
+      Check-in
+    </button>
+    <p *ngIf="dailyAlreadyClaimed" class="dailyAlreadyClaimed">
+      Ati primit deja daily reward-ul astazi.<br /> Incercati mai tarziu
+    </p>
+    <p *ngIf="dailySuccess" class="dailySuccess">
+      Felicitari! Ati primit daily reward-ul.
+    </p>
+  </div>
     <div id="about-area" class="card">
         <h5>Despre</h5>
         <div class="table">
@@ -26,15 +33,21 @@
         </div>
     </div>
     <div id="options-area" class="card">
-        <h5>Optiuni</h5>
-        <div class="buttons">
+      <h5>Optiuni</h5>
+      <div class="buttons">
         <div class="options-grid">
-            <button id="logout" class="btn btn-dark">
-                Deconecteaza-te
-            </button>
-            <button id="changepass" class="btn btn-dark">
-                Schimba parola
-            </button></div>
+          <button id="logout" class="btn btn-dark"
+                  (click)="logOut()">
+            Deconecteaza-te
+          </button>
+          <button id="changepass" class="btn btn-dark">
+            Schimba parola
+          </button>
         </div>
+
+      <p *ngIf="logOutSuccess" class="logOutSuccess">
+        V-ati delogat cu succes<br />Veti fi redirectionat!
+      </p>
+
     </div>
 </div>

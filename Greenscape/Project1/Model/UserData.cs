@@ -14,6 +14,6 @@ namespace Project1.Model
         // TODO Add default profile picture
         public string? ProfilePicture {  get; set; }
 
-        public ApplicationUser ApplicationUser { get; set; }
+        public ApplicationUser ApplicationUser { get; set; } = null!;
     }
 }

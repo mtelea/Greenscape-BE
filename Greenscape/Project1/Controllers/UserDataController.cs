@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Project1.Data;
+using Project1.Dto;
 using Project1.Model;
 
 namespace Project1.Controllers
@@ -143,8 +144,12 @@ namespace Project1.Controllers
 
         [HttpPost("update-user-points")]
         [Authorize(Roles = "Admin, User")]
-        public async Task<IActionResult> UpdateUserPoints(int points, string operation, string source)
+        public async Task<IActionResult> UpdateUserPoints([FromBody]PointRequestModel pointRequestModel)
         {
+            int points = pointRequestModel.Points;
+            string operation = pointRequestModel.Operation;
+            string source = pointRequestModel.Source;
+
             var username = User.FindFirstValue(ClaimTypes.Name);
             var user = await _userManager.FindByNameAsync(username);
             var userId = await _userManager.GetUserIdAsync(user);
@@ -312,9 +317,50 @@ namespace Project1.Controllers
         // GET: api/UserData
         [HttpGet]
         [Authorize(Roles = "Admin, User")]
-        public async Task<ActionResult<IEnumerable<UserData>>> GetUserData()
+        public async Task<ActionResult<UserDto>> GetUserData()
         {
-            return await _context.UserData.ToListAsync();
+            var username = User.FindFirstValue(ClaimTypes.Name);
+            var user = await _userManager.FindByNameAsync(username);
+            var userId = await _userManager.GetUserIdAsync(user);
+            var userData = await _context.UserData.FindAsync(userId);
+
+            if (userData == null)
+            {
+                UserData newUserData = new UserData();
+                newUserData.UserID = userId;
+                newUserData.Points = 0;
+                _context.UserData.Add(newUserData);
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (Exception e)
+                {
+                    System.Diagnostics.Debug.WriteLine(e);
+                    return BadRequest(new { Message = "Creating user data failed" });
+
+                }
+            }
+
+            var userProfile = await _context.UserData
+                .Include(u => u.ApplicationUser)
+                .Where(u => u.UserID == userId)
+                .Select(u => new UserDto
+                {
+                    UserID = u.UserID,
+                    Username = u.ApplicationUser.UserName,
+                    Email = u.ApplicationUser.Email,
+                    Points = u.Points ?? 0,
+                    ProfilePicture = u.ProfilePicture ?? "images/profilepictures\\\\default_profile_picture.jpg",
+                })
+                .FirstOrDefaultAsync();
+
+            if (userProfile == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(userProfile);
         }
 
         // GET: api/UserData/5

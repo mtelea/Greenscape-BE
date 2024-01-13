@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Project1.Model;
@@ -38,7 +39,8 @@ namespace Project1.Controllers
             return BadRequest(new { Message = "Invalid login data" });
         }
 
-        [HttpPost("logout")]
+        [HttpGet("logout")]
+        [Authorize(Roles = "Admin, User")]
         public async Task<IActionResult> LogOut()
         {
             var username = User.FindFirstValue(ClaimTypes.Name);

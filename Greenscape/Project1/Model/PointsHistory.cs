@@ -14,6 +14,6 @@ namespace Project1.Model
         public DateTime EntryDate { get; set; }
         public string? Source { get; set; }
 
-        public ApplicationUser ApplicationUser { get; set; }
+        public ApplicationUser ApplicationUser { get; set; } = null!;
     }
 }
