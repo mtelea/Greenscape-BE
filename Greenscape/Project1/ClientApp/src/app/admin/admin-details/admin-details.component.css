@@ -1,0 +1,28 @@
+.card{
+    padding: 4%;
+    font-family: Raleway;
+}
+.title{
+    font-family: GT-Super;
+    text-align: center;
+}
+label{
+    font-weight: bold;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 20px;
+    padding: 20px;
+    /* other styles if needed */
+}
+
+img{
+    width: 100%;
+    width: 20vw;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+}

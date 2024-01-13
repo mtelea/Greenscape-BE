@@ -1,21 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { IPlant } from '../shared/IPlant';
-import { FructeService } from './fructe.service';
 import { Subscription } from 'rxjs';
+import { IPlant } from '../shared/IPlant';
+import { AdminService } from './admin.service';
 
 @Component({
-  selector: 'app-fructe',
-  templateUrl: './fructe.component.html',
-  styleUrls: ['./fructe.component.css']
+  selector: 'app-admin',
+  templateUrl: './admin.component.html',
+  styleUrls: ['./admin.component.css']
 })
-export class FructeComponent implements OnInit {
+export class AdminComponent implements OnInit {
   pageTitle = 'Product List';
   imageWidth = 50;
   imageMargin = 2;
   showImage = false;
   errorMessage = '';
   sub!: Subscription;
-
+  
   private _listFilter = '';
   get listFilter(): string {
     return this._listFilter;
@@ -28,7 +28,7 @@ export class FructeComponent implements OnInit {
   filteredProducts: IPlant[] = [];
   products: IPlant[] = [];
 
-  constructor(private productService: FructeService) { }
+  constructor(private productService: AdminService) { }
 
   performFilter(filterBy: string): IPlant[] {
     filterBy = filterBy.toLocaleLowerCase();
@@ -45,7 +45,6 @@ export class FructeComponent implements OnInit {
       error: err => this.errorMessage = err
     });
   }
-
   ngOnDestroy(): void {
     this.sub.unsubscribe();
   }

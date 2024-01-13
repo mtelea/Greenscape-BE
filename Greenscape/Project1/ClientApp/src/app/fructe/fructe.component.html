@@ -1,1 +1,21 @@
-<p>fructe works!</p>
+<div class="legumepage">
+    <div>
+      <!-- <div class='col-md-2'>Filter by:</div> -->
+      <input class="search" type='text' [(ngModel)]='listFilter' placeholder="Search by name..." />
+    </div>
+    <div class="cards-container">
+      <div *ngFor='let product of filteredProducts'>
+        <div class="card legume" [routerLinkActive]="['link-active']" [routerLink]="['/fructe', product.plantID]">
+          <img src="{{product.plantImage}}" />
+          <div class="cardtext">
+            <p>{{product.plantName}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </div>
+  
+  <div *ngIf='errorMessage' class='alert alert-danger'>
+    Error: {{ errorMessage }}
+  </div>

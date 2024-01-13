@@ -1,0 +1,26 @@
+#edit{
+    color: white;
+    background-color: #8F9779;
+    border-color: #8F9779;
+    margin: 2%;
+}
+#edit:hover{
+    background-color: #80876C;
+    border-color: #80876C;
+}
+#delete{
+    background-color: #dc3545;
+    margin: 2%;
+}
+#delete:hover{
+    background-color: #c6303e;
+    border-color: #c6303e;
+}
+.buttons{
+    display: flex;
+    flex-direction:row;
+}
+.search{
+    padding: 3px;
+    margin-bottom: 5%;
+}
