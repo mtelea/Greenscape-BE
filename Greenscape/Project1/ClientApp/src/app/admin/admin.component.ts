@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { IPlant } from '../shared/IPlant';
 import { AdminService } from './admin.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-admin',
@@ -28,7 +29,7 @@ export class AdminComponent implements OnInit {
   filteredProducts: IPlant[] = [];
   products: IPlant[] = [];
 
-  constructor(private productService: AdminService) { }
+  constructor(private productService: AdminService, private http: HttpClient) { }
 
   performFilter(filterBy: string): IPlant[] {
     filterBy = filterBy.toLocaleLowerCase();
@@ -47,6 +48,22 @@ export class AdminComponent implements OnInit {
   }
   ngOnDestroy(): void {
     this.sub.unsubscribe();
+  }
+
+  deletePlant(plantId: number): void {
+    const url = 'https://localhost:7211/plants/delete/' + plantId;
+
+    const httpOptions = {
+      withCredentials: true
+    };
+
+    this.http.delete<any>(url, httpOptions).subscribe((response: any) => {
+      console.log(response.Message);
+      // Add image refresh on success
+    },
+      (error) => {
+        console.error('Error uploading picture:', error);
+      });
   }
 
 }

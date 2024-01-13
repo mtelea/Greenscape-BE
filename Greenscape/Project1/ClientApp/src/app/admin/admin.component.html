@@ -20,7 +20,7 @@
                 <button type="button" id="edit" class="btn btn-light"
                 [routerLinkActive]="['link-active']" [routerLink]="['/admin', product.plantID]"
                 >Edit</button>
-                <button type="button" id="delete" class="btn btn-danger">Delete</button></div>
+                <button type="button" id="delete" class="btn btn-danger" (click)="deletePlant(product.plantID)">Delete</button></div>
             </tr>
         </tbody>
     </table>

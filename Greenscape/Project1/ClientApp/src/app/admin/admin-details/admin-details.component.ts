@@ -12,6 +12,7 @@ import { Admin } from '../admin';
   styleUrls: ['./admin-details.component.css']
 })
 export class AdminDetailsComponent implements OnInit {
+  id: number = Number(this.route.snapshot.paramMap.get('id'));
   adminForm!: FormGroup;
   signup = new Admin();
   passwordMessage = '';
@@ -46,7 +47,7 @@ export class AdminDetailsComponent implements OnInit {
     this.productService.getProduct(id).subscribe({
       next: product => {
         this.product = product;
-        this.populateData(); // Call populateData here after product is fetched
+        this.populateData();
       },
       error: err => this.errorMessage = err
     });
@@ -68,6 +69,54 @@ export class AdminDetailsComponent implements OnInit {
       species: this.product?.plantSpecies,
       description: this.product?.plantDescription
     })
+  }
+
+  savePlantDetails(): void {
+    const url = 'https://localhost:7211/plants/update/' + this.id;
+
+    const httpOptions = {
+      withCredentials: true
+    };
+
+    const payload = {
+      plantName: this.adminForm.get('name')?.value,
+      plantImage: this.product?.plantImage,
+      type: this.adminForm.get('type')?.value,
+      plantSpecies: this.adminForm.get('species')?.value,
+      plantDescription: this.adminForm.get('description')?.value,
+    };
+
+    this.httpClient.post<any>(url, payload, httpOptions).subscribe((response: any) => {
+      console.log(response.Message);
+    },
+      (error) => {
+        console.error('Error updating plant:', error);
+      });
+  }
+
+  editPicture(event: any): void {
+    const input = event.target;
+    if (input.files && input.files[0]) {
+      const file = input.files[0];
+      const formData = new FormData();
+      formData.append('picture', file);
+
+      const url = 'https://localhost:7211/plants/update/' + this.id + '/image';
+
+      const httpOptions = {
+        withCredentials: true
+      };
+
+      this.httpClient.post(url, formData, httpOptions).subscribe(
+        (response: any) => {
+          console.log(response.Message);
+          // Add image refresh on success
+        },
+        (error) => {
+          console.error('Error uploading picture:', error);
+        }
+      );
+    }
   }
 
 }

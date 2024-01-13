@@ -3,7 +3,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Project1.Data;
 using Project1.Model;
+using SendGrid.Helpers.Mail;
+using System.Security.Claims;
 
 namespace Project1.Controllers
 {
@@ -13,6 +16,7 @@ namespace Project1.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly AppDbContext _context;
 
         public UserController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
@@ -20,7 +24,7 @@ namespace Project1.Controllers
             _roleManager = roleManager;
         }
 
-        [HttpGet("get-users-roles")]
+        [HttpGet("get-all-users-roles")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAllUsersWithRoles()
         {
@@ -45,16 +49,18 @@ namespace Project1.Controllers
             return Ok(usersWithRoles);
         }
 
-        [HttpGet("get-role-by-email")]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> GetUserByEmail([FromQuery] string email)
+        [HttpGet("get-current-user-role")]
+        [Authorize(Roles = "Admin, User")]
+        public async Task<IActionResult> GetUserByEmail()
         {
-            if (string.IsNullOrEmpty(email))
-            {
-                return BadRequest(new { Message = "Email cannot be empty." });
-            }
+            var username = User.FindFirstValue(ClaimTypes.Name);
+            var user = await _userManager.FindByNameAsync(username);
+            var userId = await _userManager.GetUserIdAsync(user);
 
-            var user = await _userManager.FindByEmailAsync(email);
+            if (username == null)
+            {
+                return BadRequest(new { Message = "No user found" });
+            }
 
             if (user == null)
             {
@@ -63,14 +69,7 @@ namespace Project1.Controllers
 
             var userRoles = await _userManager.GetRolesAsync(user);
 
-            var userWithRoles = new
-            {
-                UserName = user.UserName,
-                Email = user.Email,
-                Roles = userRoles
-            };
-
-            return Ok(userWithRoles);
+            return Ok(userRoles);
         }
 
         [HttpDelete("delete")]

@@ -1,42 +1,47 @@
 <div class="card" *ngIf='product'>
-    <h2 class="title">Editeaza planta</h2>
+  <h2 class="title">Editeaza planta</h2>
 
-    <div class="container">
-        <form novalidate (ngSubmit)="save()" [formGroup]="adminForm">
+  <div class="container">
+    <form novalidate (ngSubmit)="save()" [formGroup]="adminForm">
 
-            <div class="form-group row mb-2">
-                <label class="col-md-2 col-form-label" for="nameId">Nume: </label>
-                <div class="col-md-8">
-                    <input class="form-control" id="nameId" type="text" formControlName="name" />
-                </div>
-            </div>
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label" for="nameId">Nume: </label>
+        <div class="col-md-8">
+          <input class="form-control" id="nameId" type="text" formControlName="name" />
+        </div>
+      </div>
 
-            <div class="form-group row mb-2">
-                <label class="col-md-2 col-form-label" for="typeId">Type: </label>
-                <div class="col-md-8">
-                    <input class="form-control" id="typeId" type="text" formControlName="type" />
-                </div>
-            </div>
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label" for="typeId">Type: </label>
+        <div class="col-md-8">
+          <input class="form-control" id="typeId" type="text" formControlName="type" />
+        </div>
+      </div>
 
-            <div class="form-group row mb-2">
-                <label class="col-md-2 col-form-label" for="speciesId">Species: </label>
-                <div class="col-md-8">
-                    <input class="form-control" id="speciesId" type="text"
-                        formControlName="species" />
-                </div>
-            </div>
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label" for="speciesId">Species: </label>
+        <div class="col-md-8">
+          <input class="form-control" id="speciesId" type="text"
+                 formControlName="species" />
+        </div>
+      </div>
 
-            <div class="form-group row mb-2">
-                <label class="col-md-2 col-form-label" for="descriptionId">Description: </label>
-                <div class="col-md-8">
-                    <input class="form-control" id="descriptionId" type="text"
-                        formControlName="description" />
-                </div>
-            </div>
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label" for="descriptionId">Description: </label>
+        <div class="col-md-8">
+          <input class="form-control" id="descriptionId" type="text"
+                 formControlName="description" />
+        </div>
+      </div>
+      <button id="savePlantDetails" (click)="savePlantDetails()" type="button" class="btn btn-primary">Save</button>
 
-        </form>
-        <img src="{{product.plantImage}}">
-    </div>
+    </form>
+
+    <img src="{{product.plantImage}}">
+  </div>
+  <button id="edit-image" type="button" class="btn btn-primary" (click)="fileInput.click()">Save image</button>
+  <input type="file" #fileInput style="display: none;" (change)="editPicture($event)">
+
 
 </div>
 <br>Value: {{ adminForm.value | json }}

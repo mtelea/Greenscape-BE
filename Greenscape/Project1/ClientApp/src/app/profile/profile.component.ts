@@ -15,10 +15,12 @@ export class ProfileComponent implements OnInit {
   dailyAlreadyClaimed = false
   dailySuccess = false
   logOutSuccess = false
+  userRoles: string = '';
 
   constructor(private http: HttpClient, private router: Router) { }
 
   ngOnInit(): void {
+    this.loadUserRoles();
     this.fetchUserData();
   }
 
@@ -30,19 +32,34 @@ export class ProfileComponent implements OnInit {
     };
 
     this.http.get<any>(url, httpOptions).subscribe((response: any) => {
-      // Assuming there is only one user in the array for simplicity
       this.username = response.username;
       this.email = response.email;
-      this.profilePicture = this.transformProfilePicture(response.profilePicture);
+      this.profilePicture = response.profilePicture;
       this.points = response.points;
     });
   }
 
-  transformProfilePicture(profilePictureValue: string): string {
+  loadUserRoles(): void {
+    const url = 'https://localhost:7211/user/get-current-user-role';
+
+    const httpOptions = {
+      withCredentials: true
+    };
+    this.http.get<string>(url, httpOptions).subscribe(
+      (roles: string) => {
+        this.userRoles = roles;
+      },
+      (error) => {
+        console.error('Error loading user roles:', error);
+      }
+    );
+  }
+
+/*  transformProfilePicture(profilePictureValue: string): string {
     const localhostPart = 'https://localhost:7211/';
     const transformedPath = localhostPart + profilePictureValue
     return transformedPath;
-  }
+  }*/
 
   defineProfileValues():void{
     this.username = 'lila';
@@ -92,10 +109,12 @@ export class ProfileComponent implements OnInit {
       (response: any) => {
         console.log(response.Message);
         this.fetchUserData();
+        this.dailyAlreadyClaimed = false;
         this.dailySuccess = true
       },
       (error) => {
         console.error('Error during check-in', error);
+        this.dailySuccess = false;
         this.dailyAlreadyClaimed = true;
       }
     );
