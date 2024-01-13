@@ -1,0 +1,19 @@
+<div class="card" *ngIf='product'>
+    <div class="container">
+        <img src="{{product.plantImage}}">
+        <div class="table">
+            <tbody>
+                <tr>
+                    <th scope="row">Nume</th>
+                    <td>{{product.plantName}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Specie</th>
+                    <td>{{product.plantSpecies}}</td>
+                </tr>
+                    
+            </tbody>
+            <p>{{product.plantDescription}}</p>
+        </div>
+    </div>
+</div>

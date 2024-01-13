@@ -15,6 +15,15 @@ import { ProfileComponent } from './profile/profile.component';
 import { LegumeComponent } from './legume/legume.component';
 import { FructeComponent } from './fructe/fructe.component';
 import { FloriComponent } from './flori/flori.component';
+import { LegumeDetailsComponent } from './legume/legume-details/legume-details.component';
+import { ProductModule } from './legume/product.module';
+import { FructeDetailsComponent } from './fructe/fructe-details/fructe-details.component';
+import { FructeModule } from './fructe/fructe.module';
+import { FloriDetailsComponent } from './flori/flori-details/flori-details.component';
+import { FloriModule } from './flori/flori.module';
+import { AdminComponent } from './admin/admin.component';
+import { AdminDetailsComponent } from './admin/admin-details/admin-details.component';
+import { AdminModule } from './admin/admin.module';
 
 @NgModule({
   declarations: [
@@ -25,10 +34,7 @@ import { FloriComponent } from './flori/flori.component';
     FetchDataComponent,
     LoginComponent,
     SignupComponent,
-    ProfileComponent,
-    LegumeComponent,
-    FructeComponent,
-    FloriComponent
+    ProfileComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -45,7 +51,9 @@ import { FloriComponent } from './flori/flori.component';
       { path: 'legume', component: LegumeComponent },
       { path: 'fructe', component: FructeComponent },
       { path: 'flori', component: FloriComponent },
-    ])
+      { path: 'admin', component: AdminComponent },
+    ]),
+    ProductModule,FructeModule,FloriModule,AdminModule
   ],
   providers: [],
   bootstrap: [AppComponent]

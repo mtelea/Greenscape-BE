@@ -1,0 +1,55 @@
+.legumepage{
+    font-family: Raleway;
+}
+
+img {
+    width: 100%;
+    height: 10vw;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    /* creates 3 columns with equal width */
+    grid-gap: 20px;
+    /* adjust the gap as needed */
+    padding: 20px;
+}
+
+@media (max-width: 900px) {
+    .cards-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    img{
+        height: 12vw;
+    }
+}
+
+.legume {
+    flex-basis: calc(33.333%);
+    margin: 5px;
+    text-align: center;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.40);
+    border: none;
+    overflow: hidden;
+    -webkit-transition: all 0.2s ease-in;
+    -moz-transition: all 0.2s ease-in;
+    -ms-transition: all 0.2s ease-in;
+    -o-transition: all 0.2s ease-in;
+    transition: all 0.2s ease-in;
+    border-radius: 10px;
+}
+
+.legume:hover{
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+}
+
+.cardtext{
+    padding: 5%;
+}
+.search{
+    padding: 3px;
+}
