@@ -48,26 +48,40 @@ namespace Project1.Controllers
         {
             if (newPlant == null)
             {
-                return BadRequest("Plant data is invalid");
+                return BadRequest(new { Message = "Plant data is invalid" });
             }
 
             var validPlantTypes = new List<string> { "legume", "fructe", "flori" };
 
             if (!validPlantTypes.Contains(newPlant.Type?.ToLower()))
             {
-                return BadRequest("Plant type not valid!");
+                return BadRequest( new { Message = "Plant type not valid!" });
             }
 
             var existingPlant = await _context.Plant.FirstOrDefaultAsync(p => p.PlantName == newPlant.PlantName);
             if (existingPlant != null)
             {
-                return Conflict("A plant with the same name already exists");
+                return Conflict(new { Message = "A plant with the same name already exists" });
             }
 
+            var addedPlant = _plantMapper.MapDtoToPlant(newPlant);
             _context.Plant.Add(_plantMapper.MapDtoToPlant(newPlant));
             await _context.SaveChangesAsync();
 
-            return Ok(newPlant);
+            var newPlantId = await _context.Plant
+                .Where(p => p.PlantName == newPlant.PlantName)
+                .Select(p => p.PlantID)
+                .FirstOrDefaultAsync();
+
+            return Ok(new Plant
+            {
+                PlantName = addedPlant.PlantName,
+                PlantImage = addedPlant.PlantImage,
+                Type = addedPlant.Type,
+                PlantSpecies = addedPlant.PlantSpecies,
+                PlantDescription = addedPlant.PlantDescription,
+                PlantID = newPlantId
+            });
         }
 
         [HttpDelete("delete/{plantId}")]
