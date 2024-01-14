@@ -33,15 +33,18 @@
                  formControlName="description" />
         </div>
       </div>
+      <button id="savePlantDetails" (click)="savePlantDetails()" type="button" class="btn btn-primary">Save</button>
+      <p *ngIf="savedPlantDetailsSuccess">Saved plants details successfully</p>
+      <p *ngIf="savedPlantDetailsError">Error while updating plant details</p>
 
     </form>
 
-    <div class="image-container position-relative">
-      <img src="{{product.plantImage}}">
-      <i id="edit-icon" class="fa-solid fa-pen-to-square" (click)="fileInput.click()"></i>
-      <input type="file" #fileInput (change)="editPicture($event)" style="display: none;">
-    </div>
-    <button id="savePlantDetails" (click)="savePlantDetails()" type="button" class="btn btn-primary">Save</button>
+    <img src="{{product.plantImage}}">
+  </div>
+  <button id="edit-image" type="button" class="btn btn-primary" (click)="fileInput.click()">Upload and save image</button>
+  <p *ngIf="savedPlantImageSuccess">Saved plant image successfully</p>
+  <p *ngIf="savedPlantImageError">Error while saving plant image</p>
+  <input type="file" #fileInput style="display: none;" (change)="editPicture($event)">
 
   </div>
 

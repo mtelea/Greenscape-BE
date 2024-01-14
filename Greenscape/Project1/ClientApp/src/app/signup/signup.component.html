@@ -1,13 +1,17 @@
 <div class="card">
   <h2 class="signup-title">Cont nou</h2>
 
+  <p style="text-align: center; color: #2a8033;" class="registrationSuccess" *ngIf="registrationSuccess">
+    Inregistrare realizată cu succes! Veți fi redirecționat către pagina de start.
+  </p>
+
   <form novalidate (ngSubmit)="save()" [formGroup]="signupForm">
 
     <div class="form-group row mb-2">
       <label class="col-md-2 col-form-label" for="usernameId"><i class="fa-solid fa-user"></i></label>
       <div class="col-md-8">
         <input class="form-control" id="usernameId" type="text" placeholder="username (required)"
-          formControlName="username" [ngClass]="{'is-invalid': (signupForm.get('username')?.touched ||
+               formControlName="username" [ngClass]="{'is-invalid': (signupForm.get('username')?.touched ||
                                             signupForm.get('username')?.dirty) &&
                                             !signupForm.get('username')?.valid }" />
         <span class="invalid-feedback">
@@ -25,7 +29,7 @@
       <label class="col-md-2 col-form-label" for="emailId"><i class="fa-solid fa-envelope"></i></label>
       <div class="col-md-8">
         <input class="form-control" id="emailId" type="email" placeholder="email (required)" formControlName="email"
-          [ngClass]="{'is-invalid': (signupForm.get('email')?.touched ||
+               [ngClass]="{'is-invalid': (signupForm.get('email')?.touched ||
             signupForm.get('email')?.dirty) &&
             !signupForm.get('email')?.valid }" />
         <span class="invalid-feedback">
@@ -45,9 +49,9 @@
         <div class="col-md-8 position-relative">
           <div class="input-group">
             <input class="form-control" id="passwordId" type="password" placeholder="password (required)"
-              formControlName="password" [ngClass]="{'is-invalid': passwordMessage }" />
+                   formControlName="password" [ngClass]="{'is-invalid': passwordMessage }" />
             <i class="fa-regular fa-eye position-absolute" style="right: 10px; top: 10px; cursor: pointer;"
-              (click)="togglePasswordVisibility()"></i>
+               (click)="togglePasswordVisibility()"></i>
             <span class="invalid-feedback">
               {{ passwordMessage }}
             </span>
@@ -60,12 +64,12 @@
         <div class="col-md-8 position-relative">
           <div class="input-group">
             <input class="form-control" id="confirmPasswordId" type="password" placeholder="confirm password (required)"
-              formControlName="confirmPassword" [ngClass]="{'is-invalid': signupForm.get('passwordGroup')?.errors ||
-                                             ((signupForm.get('passwordGroup.confirmPassword')?.touched || 
-                                              signupForm.get('passwordGroup.confirmPassword')?.dirty) && 
+                   formControlName="confirmPassword" [ngClass]="{'is-invalid': signupForm.get('passwordGroup')?.errors ||
+                                             ((signupForm.get('passwordGroup.confirmPassword')?.touched ||
+                                              signupForm.get('passwordGroup.confirmPassword')?.dirty) &&
                                               !signupForm.get('passwordGroup.confirmPassword')?.valid) }" />
             <i class="fa-regular fa-eye position-absolute" style="right: 10px; top: 10px; cursor: pointer;"
-              (click)="togglePasswordVisibility()"></i>
+               (click)="togglePasswordVisibility()"></i>
             <span class="invalid-feedback">
               <span *ngIf="signupForm.get('passwordGroup.confirmPassword')?.errors?.required">
                 Please confirm your password.
@@ -84,12 +88,9 @@
 
 
   <button class="btn btn-dark" type="submit" style="width:80px" (click)="Register()"
-    [title]="signupForm.valid ? 'Save your entered data' : 'Disabled until the form data is valid'"
-    [disabled]="!signupForm.valid">
+          [title]="signupForm.valid ? 'Save your entered data' : 'Disabled until the form data is valid'"
+          [disabled]="!signupForm.valid">
     Inscrie-te
   </button>
-
-  <p class="registrationSuccess" *ngIf="registrationSuccess">Înregistrare realizată cu succes! Conectarea dumneavoastră
-    la cont a fost efectuată.</p>
 
 </div>

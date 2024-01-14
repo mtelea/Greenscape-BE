@@ -122,14 +122,14 @@ namespace Project1.Controllers
             var plantToUpdate = await _context.Plant.FirstOrDefaultAsync(p => p.PlantID == plantId);
             if (plantToUpdate == null)
             {
-                return NotFound("Plant not found");
+                return NotFound(new { Message = "Plant not found" });
             }
 
             var validPlantTypes = new List<string> { "legume", "fructe", "flori" };
 
             if (!validPlantTypes.Contains(newPlant.Type.ToLower()))
             {
-                return BadRequest("Plant type not valid!");
+                return BadRequest(new { Message = "Plant type not valid!" });
             }
 
             plantToUpdate.PlantName = newPlant.PlantName;
@@ -139,7 +139,7 @@ namespace Project1.Controllers
 
             await _context.SaveChangesAsync();
 
-            return Ok("Updated successfully");
+            return Ok(new { Message = "Updated successfully" });
         }
 
         [HttpPost("update/{plantId}/image")]
@@ -167,7 +167,7 @@ namespace Project1.Controllers
 
             if (plantToUpdate == null)
             {
-                return NotFound("Plant not found");
+                return NotFound(new { Message = "Plant not found" });
             }
 
             if (plantToUpdate.PlantImage != null) 
@@ -261,6 +261,7 @@ namespace Project1.Controllers
 
         [HttpGet("getByType/legume")]
         [Authorize(Roles = "Admin, User")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Plant>>> GetLegume()
         {
             var legume = await _context.Plant.Where(p => p.Type == "legume").ToListAsync();
@@ -275,6 +276,7 @@ namespace Project1.Controllers
 
         [HttpGet("getByType/fructe")]
         [Authorize(Roles = "Admin, User")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Plant>>> GetFructe()
         {
             var fructe = await _context.Plant.Where(p => p.Type == "fructe").ToListAsync();
@@ -289,6 +291,7 @@ namespace Project1.Controllers
 
         [HttpGet("getByType/flori")]
         [Authorize(Roles = "Admin, User")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Plant>>> GetFlori()
         {
             var flori = await _context.Plant.Where(p => p.Type == "flori").ToListAsync();

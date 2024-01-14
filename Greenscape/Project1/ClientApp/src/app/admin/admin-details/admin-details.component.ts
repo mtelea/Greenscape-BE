@@ -17,6 +17,10 @@ export class AdminDetailsComponent implements OnInit {
   admin = new Admin();
   passwordMessage = '';
   showPassword = false;
+  savedPlantDetailsSuccess = false;
+  savedPlantDetailsError = false; 
+  savedPlantImageSuccess = false;
+  savedPlantImageError = false;
   registrationSuccess = false
   pageTitle = 'Product Detail';
   errorMessage = '';
@@ -87,10 +91,14 @@ export class AdminDetailsComponent implements OnInit {
     };
 
     this.httpClient.post<any>(url, payload, httpOptions).subscribe((response: any) => {
-      console.log(response.Message);
+      /*console.log(response.Message);*/
+      this.savedPlantDetailsSuccess = true;
+      this.savedPlantDetailsError = false;
     },
       (error) => {
-        console.error('Error updating plant:', error);
+        /*console.error('Error updating plant:', error);*/
+        this.savedPlantDetailsError = true;
+        this.savedPlantDetailsSuccess = false;
       });
   }
 
@@ -109,11 +117,14 @@ export class AdminDetailsComponent implements OnInit {
 
       this.httpClient.post(url, formData, httpOptions).subscribe(
         (response: any) => {
-          console.log(response.Message);
-          // Add image refresh on success
+          /*console.log(response.Message);*/
+          this.savedPlantImageSuccess = true;
+          this.savedPlantImageError = false;
         },
         (error) => {
-          console.error('Error uploading picture:', error);
+          /*console.error('Error uploading picture:', error);*/
+          this.savedPlantImageError = true;
+          this.savedPlantImageSuccess = false;
         }
       );
     }

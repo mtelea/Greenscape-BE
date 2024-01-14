@@ -38,20 +38,23 @@
     </div>
     <div id="options-area" class="card">
       <h5>Optiuni</h5>
+      <p style="text-align: center; color: #2a8033;" class="forgotEmailSuccess" *ngIf="forgotEmailSuccess">
+        Un email ce contine link-ul de resetare a parolei a fost trimis cu succes.
+      </p>
       <div class="buttons">
         <div class="options-grid">
           <button id="logout" class="btn btn-dark"
                   (click)="logOut()">
             Deconecteaza-te
           </button>
-          <button id="changepass" [routerLinkActive]="['link-active']" [routerLink]="['/reset-password']" class="btn btn-dark">
+          <button id="changepass" (click)="doForgotPassword()" class="btn btn-dark">
             Schimba parola
           </button>
         </div>
 
-      <p *ngIf="logOutSuccess" class="logOutSuccess">
-        V-ati delogat cu succes<br />Veti fi redirectionat!
-      </p>
+        <p *ngIf="logOutSuccess" class="logOutSuccess">
+          V-ati delogat cu succes<br />Veti fi redirectionat!
+        </p>
 
+      </div>
     </div>
-</div>

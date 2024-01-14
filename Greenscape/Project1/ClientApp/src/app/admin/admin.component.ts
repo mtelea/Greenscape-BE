@@ -16,6 +16,7 @@ export class AdminComponent implements OnInit {
   showImage = false;
   errorMessage = '';
   sub!: Subscription;
+  deleteSuccess = false;
   
   private _listFilter = '';
   get listFilter(): string {
@@ -58,10 +59,13 @@ export class AdminComponent implements OnInit {
     };
 
     this.http.delete<any>(url, httpOptions).subscribe((response: any) => {
-      console.log(response.Message);
       // Add image refresh on success
+        this.deleteSuccess = true;
     },
       (error) => {
+        /*this.deleteSuccess = false;*/
+        this.deleteSuccess = false;
+
         console.error('Error uploading picture:', error);
       });
   }
