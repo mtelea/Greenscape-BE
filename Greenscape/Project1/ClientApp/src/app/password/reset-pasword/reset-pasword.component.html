@@ -1,48 +1,55 @@
 <div class="card">
-    <form novalidate [formGroup]="resetForm">
-        <div formGroupName="passwordGroup">
-            <div class="form-group row mb-2">
-              <label class="col-md-2 col-form-label" for="passwordId"><i class="fa-solid fa-lock"></i></label>
-              <div class="col-md-8 position-relative">
-                <div class="input-group">
-                  <input class="form-control" id="passwordId" type="password" placeholder="password (required)"
-                    formControlName="password" [ngClass]="{'is-invalid': passwordMessage }" />
-                  <i class="fa-regular fa-eye position-absolute" style="right: 10px; top: 10px; cursor: pointer;"
-                    (click)="togglePasswordVisibility()"></i>
-                  <span class="invalid-feedback">
-                    {{ passwordMessage }}
-                  </span>
-                </div>
-              </div>
-            </div>
-      
-            <div class="form-group row mb-2">
-              <label class="col-md-2 col-form-label" for="confirmPasswordId"></label>
-              <div class="col-md-8 position-relative">
-                <div class="input-group">
-                  <input class="form-control" id="confirmPasswordId" type="password" placeholder="confirm password (required)"
-                    formControlName="confirmPassword" [ngClass]="{'is-invalid': resetForm.get('passwordGroup')?.errors ||
-                                                   ((resetForm.get('passwordGroup.confirmPassword')?.touched || 
-                                                   resetForm.get('passwordGroup.confirmPassword')?.dirty) && 
-                                                    !resetForm.get('passwordGroup.confirmPassword')?.valid) }" />
-                  <i class="fa-regular fa-eye position-absolute" style="right: 10px; top: 10px; cursor: pointer;"
-                    (click)="togglePasswordVisibility()"></i>
-                  <span class="invalid-feedback">
-                    <span *ngIf="resetForm.get('passwordGroup.confirmPassword')?.errors?.required">
-                      Please confirm your password.
-                    </span>
-                    <span *ngIf="resetForm.get('passwordGroup')?.errors?.match">
-                      The passwords do not match.
-                    </span>
-                  </span>
-                </div>
-              </div>
-            </div>
+  <p style="text-align: center; color: #2a8033;" class="resetSuccessful" *ngIf="resetSuccessful">
+    Ati resetat parola cu succes! Veți fi redirecționat către pagina de start.
+  </p>
+  <p style="text-align: center; color: #CB214E;" class="resetError" *ngIf="resetError">
+    Parola nu a putut fi resetata!.
+  </p>
+  <form novalidate [formGroup]="resetForm">
+    <div formGroupName="passwordGroup">
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label" for="passwordId"><i class="fa-solid fa-lock"></i></label>
+        <div class="col-md-8 position-relative">
+          <div class="input-group">
+            <input class="form-control" id="passwordId" type="password" placeholder="password (required)"
+                   formControlName="password" [ngClass]="{'is-invalid': passwordMessage }" />
+            <i class="fa-regular fa-eye position-absolute" style="right: 10px; top: 10px; cursor: pointer;"
+               (click)="togglePasswordVisibility()"></i>
+            <span class="invalid-feedback">
+              {{ passwordMessage }}
+            </span>
           </div>
-    </form>
-    <button class="btn btn-dark" type="submit" style="width:80px"
-            [title]="resetForm.valid ? 'Save your entered data' : 'Disabled until the form data is valid'"
-            [disabled]="!resetForm.valid">
-      Schimba
-    </button>
+        </div>
+      </div>
+
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label" for="confirmPasswordId"></label>
+        <div class="col-md-8 position-relative">
+          <div class="input-group">
+            <input class="form-control" id="confirmPasswordId" type="password" placeholder="confirm password (required)"
+                   formControlName="confirmPassword" [ngClass]="{'is-invalid': resetForm.get('passwordGroup')?.errors ||
+                                                   ((resetForm.get('passwordGroup.confirmPassword')?.touched ||
+                                                   resetForm.get('passwordGroup.confirmPassword')?.dirty) &&
+                                                    !resetForm.get('passwordGroup.confirmPassword')?.valid) }" />
+            <i class="fa-regular fa-eye position-absolute" style="right: 10px; top: 10px; cursor: pointer;"
+               (click)="togglePasswordVisibility()"></i>
+            <span class="invalid-feedback">
+              <span *ngIf="resetForm.get('passwordGroup.confirmPassword')?.errors?.required">
+                Please confirm your password.
+              </span>
+              <span *ngIf="resetForm.get('passwordGroup')?.errors?.match">
+                The passwords do not match.
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <button class="btn btn-dark" type="submit" style="width:80px"
+          [title]="resetForm.valid ? 'Save your entered data' : 'Disabled until the form data is valid'"
+          [disabled]="!resetForm.valid"
+          (click)="doResetPassword()">
+    Schimba
+  </button>
 </div>

@@ -31,10 +31,17 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>
 
     })
 /*.AddRoles<IdentityRole>()*/
+.AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>(TokenOptions.DefaultProvider)
 .AddEntityFrameworkStores<AppDbContext>();
 
 builder.Services.AddAuthorization();
 builder.Services.AddScoped<PointsHistory>();
+builder.Services.AddRouting(options =>
+{
+    options.LowercaseUrls = true;
+    options.LowercaseQueryStrings = false;
+});
+
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 

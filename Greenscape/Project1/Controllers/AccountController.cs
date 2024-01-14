@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Project1.Model;
 using Project1.Service;
+using System.Net;
+using System.Web;
 
 namespace Project1.Controllers
 {
@@ -29,7 +31,10 @@ namespace Project1.Controllers
             if (user != null && user.Email != null)
             {
                 var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-                var callbackUrl = Url.Action("reset-password", "account", new { token, email = user.Email }, protocol: HttpContext.Request.Scheme);
+                var encodedToken = HttpUtility.UrlEncode(token);
+                System.Diagnostics.Debug.WriteLine("token: " + token);
+                /*var callbackUrl = Url.Action("reset-password", "account", new { token, email = user.Email }, protocol: HttpContext.Request.Scheme);*/
+                var callbackUrl = "https://localhost:44488/#/reset-password/?token=" + encodedToken + "&email=" + user.Email;
                 var emailSubject = "Reset Your Greenscape Password";
                 var emailBody = $"Please reset the password of your Greenscape account by clicking <a href='{callbackUrl}'>here</a>.";
 
@@ -44,14 +49,17 @@ namespace Project1.Controllers
         [HttpPost("reset-password")]
         public async Task<IActionResult> ResetPassword([FromQuery] string token, [FromQuery] string email, [FromBody] ResetPasswordModel model)
         {
+
             var user = await _userManager.FindByEmailAsync(email);
+            var tokenDecoded = token.Replace(" ", "+");
+
 
             if (user == null)
             {
                 return NotFound(new { Message = "User not found" });
             }
 
-            var result = await _userManager.ResetPasswordAsync(user, token, model.NewPassword);
+            var result = await _userManager.ResetPasswordAsync(user, tokenDecoded, model.NewPassword);
 
             if (result.Succeeded)
             {
