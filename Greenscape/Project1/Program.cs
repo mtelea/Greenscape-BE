@@ -36,11 +36,11 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>
 
 builder.Services.AddAuthorization();
 builder.Services.AddScoped<PointsHistory>();
-builder.Services.AddRouting(options =>
+/*builder.Services.AddRouting(options =>
 {
     options.LowercaseUrls = true;
     options.LowercaseQueryStrings = false;
-});
+});*/
 
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";

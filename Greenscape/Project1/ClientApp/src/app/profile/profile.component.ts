@@ -16,6 +16,7 @@ export class ProfileComponent implements OnInit {
   dailySuccess = false
   logOutSuccess = false
   userRoles: string = '';
+  forgotEmailSuccess = false;
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -141,6 +142,31 @@ export class ProfileComponent implements OnInit {
       (error) => {
         console.error('Error during log-out', error);
         this.router.navigate(['/']);
+      }
+    );
+  }
+
+  doForgotPassword(): void {
+    const url = 'https://localhost:7211/account/forgot-password';
+    const forgotEmail = this.email;
+
+    const payload = {
+      email: forgotEmail
+    };
+
+    const httpOptions = {
+      withCredentials: true
+    };
+
+    this.http.post(url, payload, httpOptions).subscribe(
+      (response: any) => {
+        this.forgotEmailSuccess = true
+        console.log(response.Message);
+
+      },
+      (error) => {
+        this.forgotEmailSuccess = false
+        console.error('Error during check-in', error);
       }
     );
   }
