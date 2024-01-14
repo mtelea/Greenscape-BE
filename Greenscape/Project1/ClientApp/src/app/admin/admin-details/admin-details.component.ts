@@ -14,7 +14,7 @@ import { Admin } from '../admin';
 export class AdminDetailsComponent implements OnInit {
   id: number = Number(this.route.snapshot.paramMap.get('id'));
   adminForm!: FormGroup;
-  signup = new Admin();
+  admin = new Admin();
   passwordMessage = '';
   showPassword = false;
   savedPlantDetailsSuccess = false;
