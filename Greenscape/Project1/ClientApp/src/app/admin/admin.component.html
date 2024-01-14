@@ -1,6 +1,8 @@
 <div class="container">
     <input class="search" type='text' [(ngModel)]='listFilter' placeholder="Search by name..." />
-
+    <button [routerLinkActive]="['link-active']" [routerLink]="['/add-plant']"  class="btn btn-dark">
+        Adauga planta
+    </button>
     <table class="table">
         <thead>
             <th scope="col">Nume</th>

@@ -24,3 +24,15 @@
     padding: 3px;
     margin-bottom: 5%;
 }
+.btn {
+    background-color: #8F9779;
+    border-color: #8F9779;
+    display: block;
+    float: right;
+    width: fit-content !important;
+    font-family: Raleway;
+}
+.btn:hover{
+    background-color: #80876C;
+    border-color: #80876C;
+}

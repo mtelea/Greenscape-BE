@@ -33,14 +33,16 @@
                  formControlName="description" />
         </div>
       </div>
-      <button id="savePlantDetails" (click)="savePlantDetails()" type="button" class="btn btn-primary">Save</button>
 
     </form>
 
-    <img src="{{product.plantImage}}">
-  </div>
-  <button id="edit-image" type="button" class="btn btn-primary" (click)="fileInput.click()">Save image</button>
-  <input type="file" #fileInput style="display: none;" (change)="editPicture($event)">
+    <div class="image-container position-relative">
+      <img src="{{product.plantImage}}">
+      <i id="edit-icon" class="fa-solid fa-pen-to-square" (click)="fileInput.click()"></i>
+      <input type="file" #fileInput (change)="editPicture($event)" style="display: none;">
+    </div>
+    <button id="savePlantDetails" (click)="savePlantDetails()" type="button" class="btn btn-primary">Save</button>
 
+  </div>
 
 </div>

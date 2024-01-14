@@ -69,7 +69,6 @@ p {
 
 form{
     margin: 5%;
-    margin-bottom: 0% !important;
 }
 .btn {
     background-color: #8F9779;
@@ -93,10 +92,6 @@ form{
     transform: translateY(-50%);
     cursor: pointer;
     /* Adjust size, color as needed */
-}
-.rememberMe{
-    margin-top: 5%;
-    margin-left: 25vw;
 }
 .forgot-redirect{
     margin-left: auto;
