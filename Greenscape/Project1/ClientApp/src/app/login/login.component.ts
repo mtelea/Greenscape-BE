@@ -39,7 +39,9 @@ export class LoginComponent implements OnInit {
         console.log('Response:', response);
         this.loginSuccess = true;
         setTimeout(() => {
-          this.router.navigate(['/']);
+          this.router.navigate(['/']).then(() => {
+            window.location.reload()
+          });
         }, 3000);
       }, error => {
         console.error('Error:', error);

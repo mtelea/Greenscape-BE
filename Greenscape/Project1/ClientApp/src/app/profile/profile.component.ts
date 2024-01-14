@@ -132,7 +132,10 @@ export class ProfileComponent implements OnInit {
         console.log(response.Message);
         this.logOutSuccess = true
         setTimeout(() => {
-          this.router.navigate(['/']);
+          this.router.navigate(['/'])
+            .then(() => {
+              window.location.reload()
+            });
         }, 3000);
       },
       (error) => {

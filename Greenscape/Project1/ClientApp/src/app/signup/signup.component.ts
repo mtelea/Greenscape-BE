@@ -3,6 +3,7 @@ import { AbstractControl, FormArray, FormBuilder, FormGroup, NgForm, ValidatorFn
 import { Signup } from './signup';
 import { debounceTime } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 function passwordMatcher(c: AbstractControl): { [key: string]: boolean } | null {
   const passwordControl = c.get('password');
@@ -36,7 +37,7 @@ export class SignupComponent implements OnInit {
     minlength: 'Your password must have at least 6 characters.'
   };
 
-  constructor(private fb: FormBuilder, private httpClient: HttpClient) { }
+  constructor(private fb: FormBuilder, private httpClient: HttpClient, private router: Router) { }
 
   ngOnInit(): void {
     this.signupForm = this.fb.group({
@@ -80,6 +81,11 @@ export class SignupComponent implements OnInit {
             console.log('API Response:', response);
             this.signupForm.reset();
             this.registrationSuccess = true;
+            setTimeout(() => {
+              this.router.navigate(['/']).then(() => {
+                window.location.reload()
+              });
+            }, 3000);
           },
           (error) => {
             console.error('API Error:', error);

@@ -57,7 +57,7 @@ namespace Project1.Controllers
         }
 
         [HttpPost("register-admin")]
-        [Authorize(Roles = "Admin")]
+        /*[Authorize(Roles = "Admin")]*/
         public async Task<IActionResult> RegisterAdminOnlyIfAdmin([FromBody] RegisterModel model)
         {
             if (ModelState.IsValid)
