@@ -15,6 +15,8 @@ export class LoginComponent implements OnInit {
   login = new Login();
   showPassword = false;
   loginSuccess = false;
+  loginError = false;
+
   constructor(private fb: FormBuilder, private http: HttpClient, private router: Router) { }
 
   ngOnInit(): void {
@@ -35,14 +37,17 @@ export class LoginComponent implements OnInit {
 
     this.http.post('https://localhost:7211/api/Login/login', this.loginForm.value, httpOptions)
       .subscribe(response => {
-        console.log('Response:', response);
         this.loginSuccess = true;
+        this.loginError = false;
+        console.log('Response:', response);
         setTimeout(() => {
           this.router.navigate(['/']).then(() => {
             window.location.reload()
           });
         }, 3000);
       }, error => {
+        this.loginError = true;
+        this.loginSuccess = false;
         console.error('Error:', error);
       });
   }
