@@ -34,12 +34,16 @@
         </div>
       </div>
       <button id="savePlantDetails" (click)="savePlantDetails()" type="button" class="btn btn-primary">Save</button>
+      <p *ngIf="savedPlantDetailsSuccess">Saved plants details successfully</p>
+      <p *ngIf="savedPlantDetailsError">Error while updating plant details</p>
 
     </form>
 
     <img src="{{product.plantImage}}">
   </div>
-  <button id="edit-image" type="button" class="btn btn-primary" (click)="fileInput.click()">Save image</button>
+  <button id="edit-image" type="button" class="btn btn-primary" (click)="fileInput.click()">Upload and save image</button>
+  <p *ngIf="savedPlantImageSuccess">Saved plant image successfully</p>
+  <p *ngIf="savedPlantImageError">Error while saving plant image</p>
   <input type="file" #fileInput style="display: none;" (change)="editPicture($event)">
 
 
