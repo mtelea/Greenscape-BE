@@ -6,6 +6,9 @@
     <p style="text-align: center; color: #2a8033;" class="loginSuccess" *ngIf="loginSuccess">
       Conectare realizată cu succes! Veți fi redirecționat către pagina de start.
     </p>
+    <p style="text-align: center; color: #CB214E;" class="loginError" *ngIf="loginError">
+      Conectarea a esuat!
+    </p>
 
     <form novalidate (ngSubmit)="save()" [formGroup]="loginForm">
 
