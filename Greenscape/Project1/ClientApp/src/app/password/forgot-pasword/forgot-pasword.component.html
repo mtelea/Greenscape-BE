@@ -1,27 +1,33 @@
 <div class="card">
-    <form novalidate [formGroup]="forgotForm">
-        <div class="form-group row mb-2">
-            <label class="col-md-2 col-form-label" for="emailId"><i class="fa-solid fa-envelope"></i></label>
-            <div class="col-md-8">
-              <input class="form-control" id="emailId" type="email" placeholder="email (required)" formControlName="email"
-                [ngClass]="{'is-invalid': (forgotForm.get('email')?.touched ||
+  <p style="text-align: center; color: #2a8033;" class="forgotPassSuccessful" *ngIf="forgotPassSuccessful">
+    Un email cu link-ul pentru resetarea parolei a fost trimis! Verificati si folderul spam.
+  </p>
+  <p style="text-align: center; color: #CB214E;" class="forgotPassError" *ngIf="forgotPassError">
+    Email-ul introdus nu a fost gasit!
+  </p>
+  <form novalidate [formGroup]="forgotForm">
+    <div class="form-group row mb-2">
+      <label class="col-md-2 col-form-label" for="emailId"><i class="fa-solid fa-envelope"></i></label>
+      <div class="col-md-8">
+        <input class="form-control" id="emailId" type="email" placeholder="email (required)" formControlName="email"
+               [ngClass]="{'is-invalid': (forgotForm.get('email')?.touched ||
                 forgotForm.get('email')?.dirty) &&
                   !forgotForm.get('email')?.valid }" />
-              <span class="invalid-feedback">
-                <span *ngIf="forgotForm.get('email')?.errors?.required">
-                  Please enter your email address.
-                </span>
-                <span *ngIf="forgotForm.get('email')?.errors?.email">
-                  Please enter a valid email address.
-                </span>
-              </span>
-            </div>
-          </div>
-    </form>
-    <button class="btn btn-dark" type="submit" style="width:80px"
-            [title]="forgotForm.valid ? 'Save your entered data' : 'Disabled until the form data is valid'"
-            [disabled]="!forgotForm.valid"
-            (click)="doForgotPassword()">
-      Trimite
-    </button>
+        <span class="invalid-feedback">
+          <span *ngIf="forgotForm.get('email')?.errors?.required">
+            Please enter your email address.
+          </span>
+          <span *ngIf="forgotForm.get('email')?.errors?.email">
+            Please enter a valid email address.
+          </span>
+        </span>
+      </div>
+    </div>
+  </form>
+  <button class="btn btn-dark" type="submit" style="width:80px"
+          [title]="forgotForm.valid ? 'Save your entered data' : 'Disabled until the form data is valid'"
+          [disabled]="!forgotForm.valid"
+          (click)="doForgotPassword()">
+    Trimite
+  </button>
 </div>

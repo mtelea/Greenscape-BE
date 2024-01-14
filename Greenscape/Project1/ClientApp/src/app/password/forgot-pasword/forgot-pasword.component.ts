@@ -12,6 +12,8 @@ import { Router } from '@angular/router';
 export class ForgotPaswordComponent implements OnInit {
   forgotForm!: FormGroup;
   forgot = new Forgot();
+  forgotPassSuccessful = false
+  forgotPassError = false
 
 
   constructor(private fb: FormBuilder, private http: HttpClient, private router: Router) { }
@@ -36,11 +38,15 @@ export class ForgotPaswordComponent implements OnInit {
 
     this.http.post(url, payload, httpOptions).subscribe(
       (response: any) => {
-        console.log(response.Message);
+        /*console.log(response.Message);*/
+        this.forgotPassSuccessful = true;
+        this.forgotPassError = false;
 
       },
       (error) => {
-        console.error('Error during check-in', error);
+        /*console.error('Error during check-in', error);*/
+        this.forgotPassSuccessful = false;
+        this.forgotPassError = true;
       }
     );
   }
