@@ -59,16 +59,13 @@ export class AdminComponent implements OnInit {
     };
 
     this.http.delete<any>(url, httpOptions).subscribe((response: any) => {
-      console.log(response.Message);
       // Add image refresh on success
-      if (response.Success) {
         this.deleteSuccess = true;
-      } else {
-        this.deleteSuccess = false;
-      }
     },
       (error) => {
+        /*this.deleteSuccess = false;*/
         this.deleteSuccess = false;
+
         console.error('Error uploading picture:', error);
       });
   }

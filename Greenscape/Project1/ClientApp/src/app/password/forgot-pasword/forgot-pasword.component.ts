@@ -22,4 +22,27 @@ export class ForgotPaswordComponent implements OnInit {
     });
   }
 
+  doForgotPassword(): void {
+    const url = 'https://localhost:7211/account/forgot-password';
+    const email = this.forgotForm.get('email')?.value;
+
+    const payload = {
+      email: email
+    };
+
+    const httpOptions = {
+      withCredentials: true
+    };
+
+    this.http.post(url, payload, httpOptions).subscribe(
+      (response: any) => {
+        console.log(response.Message);
+
+      },
+      (error) => {
+        console.error('Error during check-in', error);
+      }
+    );
+  }
+
 }
