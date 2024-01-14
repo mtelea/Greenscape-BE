@@ -75,7 +75,7 @@ form{
     background-color: #8F9779;
     border-color: #8F9779;
     display: block;
-    margin-left: auto;
+    margin-left: auto; 
     margin-right:auto;
     justify-content: center;
     align-items: center;
@@ -97,4 +97,14 @@ form{
 .rememberMe{
     margin-top: 5%;
     margin-left: 25vw;
+}
+.forgot-redirect{
+    margin-left: auto;
+    margin-right: auto;
+    cursor: pointer;
+    font-family: Raleway;
+    padding: 5%;
+}
+.forgot-redirect:hover{
+    text-decoration: underline;
 }

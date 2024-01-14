@@ -1,0 +1,22 @@
+.card{
+    padding: 4%;
+    font-family: Raleway;
+}
+.btn {
+    background-color: #8F9779;
+    border-color: #8F9779;
+    display: block;
+    margin-left: auto;
+    margin-right:auto;
+    justify-content: center;
+    align-items: center;
+    width: fit-content !important;
+    margin-top: 5%;
+}
+.btn:hover{
+    background-color: #80876C;
+    border-color: #80876C;
+}
+.form{
+    margin: 5%;
+}

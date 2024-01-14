@@ -24,6 +24,8 @@ import { FloriModule } from './flori/flori.module';
 import { AdminComponent } from './admin/admin.component';
 import { AdminDetailsComponent } from './admin/admin-details/admin-details.component';
 import { AdminModule } from './admin/admin.module';
+import { ForgotPaswordComponent } from './password/forgot-pasword/forgot-pasword.component';
+import { ResetPaswordComponent } from './password/reset-pasword/reset-pasword.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,9 @@ import { AdminModule } from './admin/admin.module';
     FetchDataComponent,
     LoginComponent,
     SignupComponent,
-    ProfileComponent
+    ProfileComponent,
+    ForgotPaswordComponent,
+    ResetPaswordComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -52,6 +56,8 @@ import { AdminModule } from './admin/admin.module';
       { path: 'fructe', component: FructeComponent },
       { path: 'flori', component: FloriComponent },
       { path: 'admin', component: AdminComponent },
+      { path: 'forgot-pasword', component: ForgotPaswordComponent },
+      { path: 'reset-password', component: ResetPaswordComponent },
     ]),
     ProductModule,FructeModule,FloriModule,AdminModule
   ],

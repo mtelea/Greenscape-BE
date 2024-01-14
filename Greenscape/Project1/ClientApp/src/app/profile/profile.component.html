@@ -44,7 +44,7 @@
                   (click)="logOut()">
             Deconecteaza-te
           </button>
-          <button id="changepass" class="btn btn-dark">
+          <button id="changepass" [routerLinkActive]="['link-active']" [routerLink]="['/reset-password']" class="btn btn-dark">
             Schimba parola
           </button>
         </div>

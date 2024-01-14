@@ -71,6 +71,9 @@
             [disabled]="!loginForm.valid">
       Conecteaza-te
     </button>
+
+    <p class="forgot-redirect" [routerLinkActive]="['link-active']" [routerLink]="['/forgot-pasword']">Ai uitat parola?</p>
+
   </div>
     <p class="signup-redirect" [routerLinkActive]="['link-active']" [routerLink]="['/signup']">Nu ai cont? Creeaza unul
         acum!</p>
