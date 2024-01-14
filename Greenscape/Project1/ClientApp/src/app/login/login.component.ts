@@ -15,7 +15,6 @@ export class LoginComponent implements OnInit {
   login = new Login();
   showPassword = false;
   loginSuccess = false;
-
   constructor(private fb: FormBuilder, private http: HttpClient, private router: Router) { }
 
   ngOnInit(): void {
