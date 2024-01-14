@@ -17,10 +17,13 @@
                 <td>{{product.plantSpecies}}</td>
                 <td>{{product.plantDescription}}</td>
                 <div class="buttons">
-                <button type="button" id="edit" class="btn btn-light"
-                [routerLinkActive]="['link-active']" [routerLink]="['/admin', product.plantID]"
-                >Edit</button>
-                <button type="button" id="delete" class="btn btn-danger" (click)="deletePlant(product.plantID)">Delete</button></div>
+                  <button type="button" id="edit" class="btn btn-light"
+                          [routerLinkActive]="['link-active']" [routerLink]="['/admin', product.plantID]">
+                    Edit
+                  </button>
+                  <button type="button" id="delete" class="btn btn-danger" (click)="deletePlant(product.plantID)">Delete</button>
+                  <p *ngIf="deleteSuccess">Deleted successfully!</p>
+                </div>
             </tr>
         </tbody>
     </table>
