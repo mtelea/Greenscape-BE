@@ -25,16 +25,14 @@
       <div class="form-group row mb-2">
         <label class="col-md-2 col-form-label" for="speciesId">Species: </label>
         <div class="col-md-8">
-          <input class="form-control" id="speciesId" type="text"
-                 formControlName="species" />
+          <input class="form-control" id="speciesId" type="text" formControlName="species" />
         </div>
       </div>
 
       <div class="form-group row mb-2">
         <label class="col-md-2 col-form-label" for="descriptionId">Description: </label>
         <div class="col-md-8">
-          <input class="form-control" id="descriptionId" type="text"
-                 formControlName="description" />
+          <input class="form-control" id="descriptionId" type="text" formControlName="description" />
         </div>
       </div>
       <button id="savePlantDetails" (click)="savePlantDetails()" type="button" class="btn btn-primary">Save</button>
@@ -42,13 +40,13 @@
       <p *ngIf="savedPlantDetailsError">Error while updating plant details</p>
 
     </form>
+    <div class="image-container position-relative">
+      <img src="{{product.plantImage}}">
+      <i id="edit-icon" (click)="fileInput.click()" class="fa-solid fa-pen-to-square"></i>
+      <p *ngIf="savedPlantImageSuccess">Saved plant image successfully</p>
+      <p *ngIf="savedPlantImageError">Error while saving plant image</p>
+      <input type="file" #fileInput style="display: none;" (change)="editPicture($event)">
+    </div>
 
-    <img src="{{product.plantImage}}">
   </div>
-  <button id="edit-image" type="button" class="btn btn-primary" (click)="fileInput.click()">Upload and save image</button>
-  <p *ngIf="savedPlantImageSuccess">Saved plant image successfully</p>
-  <p *ngIf="savedPlantImageError">Error while saving plant image</p>
-  <input type="file" #fileInput style="display: none;" (change)="editPicture($event)">
-
-
 </div>

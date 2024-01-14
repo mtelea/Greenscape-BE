@@ -120,6 +120,12 @@ export class AdminDetailsComponent implements OnInit {
           /*console.log(response.Message);*/
           this.savedPlantImageSuccess = true;
           this.savedPlantImageError = false;
+          setTimeout(() => {
+            this.router.navigate(['/admin/'+this.id])
+              .then(() => {
+                window.location.reload()
+              });
+          }, 1000);
         },
         (error) => {
           /*console.error('Error uploading picture:', error);*/
