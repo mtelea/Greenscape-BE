@@ -5,7 +5,7 @@
             <p>Curs Legume Incepatori</p>
             <p>Cost: 100p</p>
         </div>
-        <button [disabled]="!points100" class="btn btn-dark">Cumpara</button>
+        <button [disabled]="!points100" class="btn btn-dark" (click)="buyCourse(1)">Cumpara</button>
     </div>
     <div class="card">
         <img src="../../assets/photos/cursuri/vegetable_intermediate.png">
@@ -13,7 +13,7 @@
             <p>Curs Legume Intermediar</p>
             <p>Cost: 500p</p>
         </div>
-        <button [disabled]="!points500" class="btn btn-dark">Cumpara</button>
+        <button [disabled]="!points500" class="btn btn-dark" (click)="buyCourse(2)">Cumpara</button>
     </div>
     <div class="card">
         <img src="../../assets/photos/cursuri/vegetable_advanced.png">
@@ -21,7 +21,7 @@
             <p>Curs Legume Avansat</p>
             <p>Cost: 1000p</p>
         </div>
-        <button [disabled]="!points1000" class="btn btn-dark">Cumpara</button>
+        <button [disabled]="!points1000" class="btn btn-dark" (click)="buyCourse(3)">Cumpara</button>
     </div>
     <div class="card">
         <img src="../../assets/photos/cursuri/fruit_beginner.png">
@@ -29,7 +29,7 @@
             <p>Curs Fructe Incepatori</p>
             <p>Cost: 100p</p>
         </div>
-        <button [disabled]="!points100" class="btn btn-dark">Cumpara</button>
+        <button [disabled]="!points100" class="btn btn-dark" (click)="buyCourse(4)">Cumpara</button>
     </div>
     <div class="card">
         <img src="../../assets/photos/cursuri/fruit_intermediate.png">
@@ -37,7 +37,7 @@
             <p>Curs Fructe Intermediar</p>
             <p>Cost: 500p</p>
         </div>
-        <button [disabled]="!points500" class="btn btn-dark">Cumpara</button>
+        <button [disabled]="!points500" class="btn btn-dark" (click)="buyCourse(5)">Cumpara</button>
     </div>
     <div class="card">
         <img src="../../assets/photos/cursuri/fruit_advanced.png">
@@ -45,7 +45,7 @@
             <p>Curs Fructe Avansat</p>
             <p>Cost: 1000p</p>
         </div>
-        <button [disabled]="!points1000" class="btn btn-dark">Cumpara</button>
+        <button [disabled]="!points1000" class="btn btn-dark" (click)="buyCourse(6)">Cumpara</button>
     </div>
     <div class="card">
         <img src="../../assets/photos/cursuri/flower_beginner.png">
@@ -53,7 +53,7 @@
             <p>Curs Flori Incepatori</p>
             <p>Cost: 100p</p>
         </div>
-        <button [disabled]="!points100" class="btn btn-dark">Cumpara</button>
+        <button [disabled]="!points100" class="btn btn-dark" (click)="buyCourse(7)">Cumpara</button>
     </div>
     <div class="card">
         <img src="../../assets/photos/cursuri/flower_intermediate.png">
@@ -61,7 +61,7 @@
             <p>Curs Flori Intermediar</p>
             <p>Cost: 500p</p>
         </div>
-        <button [disabled]="!points500" class="btn btn-dark">Cumpara</button>
+        <button [disabled]="!points500" class="btn btn-dark" (click)="buyCourse(8)">Cumpara</button>
     </div>
     <div class="card">
         <img src="../../assets/photos/cursuri/flower_advanced.png">
@@ -69,6 +69,6 @@
             <p>Curs Flori Avansat</p>
             <p>Cost: 1000p</p>
         </div>
-        <button [disabled]="!points1000" class="btn btn-dark">Cumpara</button>
+        <button [disabled]="!points1000" class="btn btn-dark" (click)="buyCourse(9)">Cumpara</button>
     </div>
 </div>
