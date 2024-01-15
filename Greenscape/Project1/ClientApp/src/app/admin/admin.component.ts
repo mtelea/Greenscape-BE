@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { IPlant } from '../shared/IPlant';
 import { AdminService } from './admin.service';
 import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin',
@@ -30,7 +31,7 @@ export class AdminComponent implements OnInit {
   filteredProducts: IPlant[] = [];
   products: IPlant[] = [];
 
-  constructor(private productService: AdminService, private http: HttpClient) { }
+  constructor(private productService: AdminService, private http: HttpClient, private router: Router) { }
 
   performFilter(filterBy: string): IPlant[] {
     filterBy = filterBy.toLocaleLowerCase();
@@ -59,8 +60,13 @@ export class AdminComponent implements OnInit {
     };
 
     this.http.delete<any>(url, httpOptions).subscribe((response: any) => {
-      // Add image refresh on success
-        this.deleteSuccess = true;
+      this.deleteSuccess = true;
+      setTimeout(() => {
+        this.router.navigate(['/admin/'])
+          .then(() => {
+            window.location.reload()
+          });
+      }, 2000);
     },
       (error) => {
         /*this.deleteSuccess = false;*/

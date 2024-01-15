@@ -1,33 +1,34 @@
 <div class="container">
-    <input class="search" type='text' [(ngModel)]='listFilter' placeholder="Search by name..." />
-    <button [routerLinkActive]="['link-active']" [routerLink]="['/add-plant']"  class="btn btn-dark">
-        Adauga planta
-    </button>
-    <table class="table">
-      <thead>
-      <th scope="col">Nume</th>
-      <th scope="col">Imagine</th>
-      <th scope="col">Tip</th>
-      <th scope="col">Specie</th>
-      <th scope="col">Descriere</th>
-      </thead>
-      <tbody>
-        <tr *ngFor="let product of filteredProducts">
-          <td>{{product.plantName}}</td>
-          <td><img style="width: 100px;" src="{{product.plantImage}}"></td>
-          <td>{{product.type}}</td>
-          <td>{{product.plantSpecies}}</td>
-          <td>{{product.plantDescription}}</td>
-          <div class="buttons">
-            <button type="button" id="edit" class="btn btn-light"
-                    [routerLinkActive]="['link-active']" [routerLink]="['/admin', product.plantID]">
-              Edit
-            </button>
-            <button type="button" id="delete" class="btn btn-danger" (click)="deletePlant(product.plantID)">Delete</button>
-          </div>
-        </tr>
-      </tbody>
-      <p *ngIf="deleteSuccess" class="deleteSuccess">Deleted successfully</p>
+  <input class="search" type='text' [(ngModel)]='listFilter' placeholder="Search by name..." />
+  <button [routerLinkActive]="['link-active']" [routerLink]="['/add-plant']" class="btn btn-dark">
+    Adauga planta
+  </button>
+  <p *ngIf="deleteSuccess" class="deleteSuccess">Deleted successfully</p>
 
-    </table>
+  <table class="table">
+    <thead>
+    <th scope="col">Nume</th>
+    <th scope="col">Imagine</th>
+    <th scope="col">Tip</th>
+    <th scope="col">Specie</th>
+    <th scope="col">Descriere</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of filteredProducts">
+        <td>{{product.plantName}}</td>
+        <td><img style="width: 100px;" src="{{product.plantImage}}"></td>
+        <td>{{product.type}}</td>
+        <td>{{product.plantSpecies}}</td>
+        <td>{{product.plantDescription}}</td>
+        <div class="buttons">
+          <button type="button" id="edit" class="btn btn-light"
+                  [routerLinkActive]="['link-active']" [routerLink]="['/admin', product.plantID]">
+            Edit
+          </button>
+          <button type="button" id="delete" class="btn btn-danger" (click)="deletePlant(product.plantID)">Delete</button>
+        </div>
+      </tr>
+    </tbody>
+
+  </table>
 </div>
