@@ -274,7 +274,6 @@ namespace Project1.Controllers
 
 
         [HttpGet("getByType/legume")]
-        [Authorize(Roles = "Admin, User")]
         [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Plant>>> GetLegume()
         {
@@ -289,7 +288,6 @@ namespace Project1.Controllers
         }
 
         [HttpGet("getByType/fructe")]
-        [Authorize(Roles = "Admin, User")]
         [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Plant>>> GetFructe()
         {
@@ -304,7 +302,6 @@ namespace Project1.Controllers
         }
 
         [HttpGet("getByType/flori")]
-        [Authorize(Roles = "Admin, User")]
         [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Plant>>> GetFlori()
         {
