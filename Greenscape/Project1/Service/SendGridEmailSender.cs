@@ -1,6 +1,7 @@
 ﻿using SendGrid;
 using SendGrid.Helpers.Mail;
 using System.Net.Mail;
+using static System.Net.WebRequestMethods;
 
 namespace Project1.Service
 {
@@ -18,7 +19,9 @@ namespace Project1.Service
             var client = new SendGridClient(_apiKey);
             var msg = new SendGridMessage
             {
-                From = new EmailAddress("greenscape@gardener.com", "Green Scape"),
+                /* From = new EmailAddress("greenscape@gardener.com", "Green Scape"),*/
+               
+               From = new EmailAddress("info@greenscape.life", "Greenscape"),
                 Subject = subject,
                 PlainTextContent = message,
                 HtmlContent = message
