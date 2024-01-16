@@ -45,7 +45,7 @@ export class CursuriComponent implements OnInit {
 
     const payload = {
       points: 100,
-      operation: "add",
+      operation: "subtract",
       source: "Course" + selectedCourseId
     };
 
