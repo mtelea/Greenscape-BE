@@ -31,6 +31,7 @@ export class SignupComponent implements OnInit {
   passwordMessage = '';
   showPassword = false;
   registrationSuccess = false
+  registrationError = false
 
   private validationMessages: any = {
     required: 'Please choose a password.',
@@ -81,6 +82,7 @@ export class SignupComponent implements OnInit {
             console.log('API Response:', response);
             this.signupForm.reset();
             this.registrationSuccess = true;
+            this.registrationError = false;
             setTimeout(() => {
               this.router.navigate(['/']).then(() => {
                 window.location.reload()
@@ -88,6 +90,8 @@ export class SignupComponent implements OnInit {
             }, 3000);
           },
           (error) => {
+            this.registrationError = true
+            this.registrationSuccess = false
             console.error('API Error:', error);
           }
         );

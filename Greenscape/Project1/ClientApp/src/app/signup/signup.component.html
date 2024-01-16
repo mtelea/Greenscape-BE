@@ -4,6 +4,9 @@
   <p style="text-align: center; color: #2a8033;" class="registrationSuccess" *ngIf="registrationSuccess">
     Inregistrare realizată cu succes! Veți fi redirecționat către pagina de start.
   </p>
+  <p style="text-align: center; color: #CB214E;" class="registrationError" *ngIf="registrationError">
+    Inregistrarea a esuat. Va rugam sa va asigurati ca nu aveti deja un cont cu acel username/email.
+  </p>
 
   <form novalidate (ngSubmit)="save()" [formGroup]="signupForm">
 
